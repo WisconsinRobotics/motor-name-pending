@@ -1,41 +1,32 @@
 #define Phoenix_No_WPI
-#include <stdint.h>
-#include <iostream>
-#include <stdexcept>
-#include "controlgroup.cpp"
-#include "ctre/Phoenix.h"
-#include "ctre/phoenix/platform/Platform.h"
-#include "ctre/phoenix/unmanaged/Unmanaged.h"
-#include "ctre/phoenix/cci/Unmanaged_CCI.h"
+#include "motor.h"
 
-using namespace ctre::phoenix;
-using namespace ctre::phoenix::platform;
-using namespace ctre::phoenix::motorcontrol;
-using namespace ctre::phoenix::motorcontrol::can;
+using std::to_string;
 
 class Motor: ControlGroup {
     public:
-        TalonSRX *motor;
-
-        Motor(uint8_t id) {
-            this->motor = new TalonSRX(id);
-            deviceid = id;
-        };
+        Motor(uint8_t ID) {
+            this->motor = new TalonSRX(ID);
+            deviceID = ID;
+        }
         void setPower(double power) {
             motor->Set(ControlMode::PercentOutput, power);
-        };
+        }
+        string getName() {
+            return to_string(deviceID);
+        }
         int32_t getEncoder() {
            return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
         }
         void setReversal(bool inverted) {
             motor->SetInverted(inverted);
-        };
+        }
         void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
             switch(inputBehavior) {
-                case BRAKE :
+                case ControlGroup::ZeroPowerBehavior::BRAKE :
                     motor->SetNeutralMode(Brake);
                     break;
-                case COAST :
+                case ControlGroup::ZeroPowerBehavior::COAST :
                     motor->SetNeutralMode(Coast);
                     break;
                 default : 
@@ -45,7 +36,9 @@ class Motor: ControlGroup {
         ~Motor(){
             delete motor;
         }
+
     private:
-        uint8_t deviceid;
+        TalonSRX *motor;
+        uint8_t deviceID;
         static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
 };

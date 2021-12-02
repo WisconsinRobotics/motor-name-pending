@@ -1,6 +1,4 @@
-#include <stdint.h>
-
-using namespace std;
+#include "controlGroup.h"
 
 class ControlGroup {
     public:
@@ -11,4 +9,5 @@ class ControlGroup {
         int32_t getEncoder();
         void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
         void setReversal(bool inverted);
+        string getName();
 };
