@@ -4,12 +4,12 @@ using std::find;
 using std::swap;
 
 
-class Group : ControlGroup {
+class Group : public ControlGroup {
     public:
         Group(string aName) {
             name = aName;
         }
-        string getName() {
+        const string getName() {
             return name;
         }
         void addControlGroup(ControlGroup cg) {
@@ -22,7 +22,7 @@ class Group : ControlGroup {
             }
             members.pop_back();
         }
-        string getMembers() {
+        const string getMembers() {
             string membersNames = "";
             for (auto i : members) {
                 membersNames.append(i.getName()).append(" ");
@@ -54,7 +54,7 @@ class Group : ControlGroup {
         void clearGroup() {
             members.clear();
         }
-        int32_t getEncoder() {
+        const int32_t getEncoder() {
             return encoderRead.getEncoder();
         }
         void setEncoder(ControlGroup cg) {

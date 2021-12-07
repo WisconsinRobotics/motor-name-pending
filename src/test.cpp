@@ -10,9 +10,12 @@ using MotorLib::ControlGroup;
 using namespace std::this_thread;
 using namespace std::chrono;
 
+void printControlGroup(const ControlGroup &obj);
+
 int main() {
     Motor testMotor0 {0};
-    testMotor0.getEncoder();
+    printControlGroup(testMotor0);
+    std::cout << testMotor0.getEncoder() << std::endl;
     testMotor0.getName();
 
     testMotor0.setZeroPowerBehavior(ControlGroup::ZeroPowerBehavior::COAST);
@@ -43,3 +46,8 @@ int main() {
 
     testMotor0.~Motor();
 };
+
+
+void printControlGroup(const ControlGroup &obj){
+    printf("Motor Name:  %s\n", obj.getName());
+}

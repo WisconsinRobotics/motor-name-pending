@@ -12,19 +12,19 @@ using std::vector;
 using MotorLib::ControlGroup;
 
 namespace MotorLib {
-    class Group : ControlGroup {
+    class Group : public ControlGroup {
         public:
             Group(string aName);
-            string getName();
+            const string getName();
             void addControlGroup(ControlGroup cg);
             void removeControlGroup(ControlGroup cg);
-            string getMembers();
+            const string getMembers();
             void setPower(double power);
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             ControlGroup getControlGroup (string aName);
             void clearGroup();
-            int32_t getEncoder();
+            const int32_t getEncoder();
             void setEncoder(ControlGroup cg);
 
         private:
