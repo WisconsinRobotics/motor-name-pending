@@ -16,14 +16,15 @@ using namespace ctre::phoenix::motorcontrol::can;
 using MotorLib::ControlGroup;
 
 namespace MotorLib {
-    class Motor : ControlGroup {
+    class Motor : public ControlGroup {
         public:
             Motor(uint8_t ID);
             void setPower(double power);
-            int32_t getEncoder();
+            const int32_t getEncoder();
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
-            string getName();
+            const string getName();
+            const string getMembers();
             ~Motor();
 
         private:
