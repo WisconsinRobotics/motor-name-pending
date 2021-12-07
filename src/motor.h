@@ -20,11 +20,11 @@ namespace MotorLib {
         public:
             Motor(uint8_t ID);
             void setPower(double power);
-            const int32_t getEncoder();
+            int32_t getEncoder() const;
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
-            const string getName();
-            const string getMembers();
+            string getName() const;
+            string getMembers() const;
             ~Motor();
 
         private:
