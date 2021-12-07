@@ -20,13 +20,13 @@ int main() {
     std::cout << testMotor0.getEncoder() << std::endl;
     testMotor0.getName();
 
-    testMotor0.setZeroPowerBehavior(ControlGroup::ZeroPowerBehavior::COAST);
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
     testMotor0.setPower(0);
     sleep_for(seconds(5));
 
-    testMotor0.setZeroPowerBehavior(ControlGroup::ZeroPowerBehavior::BRAKE);
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
     testMotor0.setPower(0);
@@ -34,13 +34,13 @@ int main() {
 
     testMotor0.setReversal(true);
 
-    testMotor0.setZeroPowerBehavior(ControlGroup::ZeroPowerBehavior::COAST);
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
     testMotor0.setPower(0);
     sleep_for(seconds(5));
 
-    testMotor0.setZeroPowerBehavior(ControlGroup::ZeroPowerBehavior::BRAKE);
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
     testMotor0.setPower(0);
@@ -51,6 +51,6 @@ int main() {
 
 
 void printControlGroup(const ControlGroup &obj){
-    printf("Motor Name:  %s\n", obj.getName());
-    printf("Encoder Value:  %s\n", to_string(obj.getEncoder()));
+    printf("Motor Name:  %s\n", obj.getName().c_str());
+    printf("Encoder Value:  %s\n", to_string(obj.getEncoder()).c_str());
 }

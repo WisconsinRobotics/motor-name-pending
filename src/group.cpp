@@ -1,67 +1,60 @@
 #include "group.h"
 
-using std::find;
+// using std::find;
 using std::swap;
 
-
-class Group : public ControlGroup {
-    public:
-        Group(string aName) {
-            name = aName;
-        }
-        string getName() const {
-            return name;
-        }
-        void addControlGroup(ControlGroup cg) {
-            members.push_back(cg);
-        }
-        void removeControlGroup(ControlGroup cg) {
-            auto it = find(members.begin(), members.end(), cg);
-            if (it != members.end()) {
-                swap(*it, members.back());
-            }
-            members.pop_back();
-        }
-        string getMembers() const {
-            string membersNames = "";
-            for (auto i : members) {
-                membersNames.append(i.getName()).append(" ");
-            }
-            return membersNames;
-        }
-        void setPower(double power) {
-            for (auto i : members) {
-                i.setPower(power);
+namespace MotorLib{
+    Group::Group(string aName) {
+        name = aName;
+    }
+    string Group::getName() const {
+        return name;
+    }
+    void Group::addControlGroup(std::shared_ptr<ControlGroup> cg) {
+        members.push_back(cg);
+    }
+    void Group::removeControlGroup(std::shared_ptr<ControlGroup> cg) {
+        for(int i = 0; i < this->members.size(); i++){
+            std::shared_ptr<ControlGroup> member = this->members.at(i);
+            if(member->getName() == cg->getName()){
+                this->members.erase(this->members.begin()+i);
+                break;
             }
         }
-        void setReversal(bool inverted) {
-            for (auto i : members) {
-                i.setReversal(inverted);
+    }
+    string Group::getMembers() const {
+        string membersNames = "";
+        for (auto i : members) {
+            membersNames.append(i->getName()).append(" ");
+        }
+        return membersNames;
+    }
+    void Group::setPower(double power) {
+        for (auto i : members) {
+            i->setPower(power);
+        }
+    }
+    void Group::setReversal(bool inverted) {
+        for (auto i : members) {
+            i->setReversal(inverted);
+        }
+    }
+    void Group::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
+        for (auto i : members) {
+            i->setZeroPowerBehavior(inputBehavior);
+        }
+    }
+    std::shared_ptr<ControlGroup> Group::getControlGroup(string aName) {
+        for (auto i : members) {
+            if (i->getName() == aName) {
+                return i;
             }
         }
-        void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
-            for (auto i : members) {
-                i.setZeroPowerBehavior(inputBehavior);
-            }
-        }
-        ControlGroup getControlGroup(string aName) {
-            for (auto i : members) {
-                if (i.getName() == aName) {
-                    return i;
-                }
-            }
-        }
-        void clearGroup() {
-            members.clear();
-        }
-        int32_t getEncoder() const {
-            return encoderRead.getEncoder();
-        }
-        void setEncoder(ControlGroup cg) {
-            encoderRead = cg;
-        }
-    private:
-        ControlGroup encoderRead;
-        string name;
-        vector<ControlGroup> members;
-};
+    }
+    void Group::clearGroup() {
+        members.clear();
+    }
+    int32_t Group::getEncoder() const {
+        return encoderRead->getEncoder();
+    }
+}
