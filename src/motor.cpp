@@ -12,10 +12,10 @@ class Motor: public ControlGroup {
         void setPower(double power) {
             motor->Set(ControlMode::PercentOutput, power);
         }
-        const string getName() {
+        string getName() const {
             return to_string(deviceID);
         }
-        const int32_t getEncoder() {
+        int32_t getEncoder() const {
            return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
         }
         void setReversal(bool inverted) {
@@ -36,7 +36,7 @@ class Motor: public ControlGroup {
         ~Motor(){
             delete motor;
         }
-        const string getMembers() {
+        string getMembers() const {
             return to_string(deviceID) + " is not a Motor Group and has no members!";
         }
 
