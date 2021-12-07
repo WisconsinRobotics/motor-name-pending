@@ -15,16 +15,16 @@ namespace MotorLib {
     class Group : public ControlGroup {
         public:
             Group(string aName);
-            const string getName();
+            string getName() const;
             void addControlGroup(ControlGroup cg);
             void removeControlGroup(ControlGroup cg);
-            const string getMembers();
+            string getMembers() const;
             void setPower(double power);
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             ControlGroup getControlGroup (string aName);
             void clearGroup();
-            const int32_t getEncoder();
+            int32_t getEncoder() const;
             void setEncoder(ControlGroup cg);
 
         private:

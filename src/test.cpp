@@ -1,10 +1,12 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <string>
 #include "controlGroup.h"
 #include "group.h"
 #include "motor.h"
 
+using std::to_string;
 using MotorLib::Motor;
 using MotorLib::ControlGroup;
 using namespace std::this_thread;
@@ -50,4 +52,5 @@ int main() {
 
 void printControlGroup(const ControlGroup &obj){
     printf("Motor Name:  %s\n", obj.getName());
+    printf("Encoder Value:  %s\n", to_string(obj.getEncoder()));
 }

@@ -9,7 +9,7 @@ class Group : public ControlGroup {
         Group(string aName) {
             name = aName;
         }
-        const string getName() {
+        string getName() const {
             return name;
         }
         void addControlGroup(ControlGroup cg) {
@@ -22,7 +22,7 @@ class Group : public ControlGroup {
             }
             members.pop_back();
         }
-        const string getMembers() {
+        string getMembers() const {
             string membersNames = "";
             for (auto i : members) {
                 membersNames.append(i.getName()).append(" ");
@@ -54,7 +54,7 @@ class Group : public ControlGroup {
         void clearGroup() {
             members.clear();
         }
-        const int32_t getEncoder() {
+        int32_t getEncoder() const {
             return encoderRead.getEncoder();
         }
         void setEncoder(ControlGroup cg) {

@@ -14,11 +14,11 @@ namespace MotorLib {
                 BRAKE, COAST
             };
             void setPower(double power);
-            const int32_t getEncoder();
+            int32_t getEncoder() const;
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             void setReversal(bool inverted);
-            const string getName();
-            const string getMembers();
+            string getName() const;
+            string getMembers() const;
     };
 }
 
