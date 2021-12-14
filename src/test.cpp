@@ -19,12 +19,11 @@ int main() {
     ctre::phoenix::platform::can::SetCANInterface("can0");
     Motor testMotor0 {1};
     printControlGroup(testMotor0);
-    std::cout << testMotor0.getEncoder() << std::endl;
-    testMotor0.getName();
     std::cout << "Starting motor" << std::endl;
     ctre::phoenix::unmanaged::FeedEnable(5000);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
+    printControlGroup(testMotor0);
 
 
     // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
