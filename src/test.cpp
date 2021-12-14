@@ -25,6 +25,7 @@ int main() {
 
     sleep_for(seconds(10));
     std::cout << "Starting motor" << std::endl;
+    ctre::phoenix::unmanaged::FeedEnable(5000);
     testMotor0.setPower(0.5);
     sleep_for(seconds(10));
 
