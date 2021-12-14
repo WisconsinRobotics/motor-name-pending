@@ -17,16 +17,13 @@ void printControlGroup(const ControlGroup &obj);
 int main() {
 
     ctre::phoenix::platform::can::SetCANInterface("can0");
-    sleep_for(seconds(10));
     Motor testMotor0 {1};
     printControlGroup(testMotor0);
     std::cout << testMotor0.getEncoder() << std::endl;
     testMotor0.getName();
-
-    sleep_for(seconds(10));
     std::cout << "Starting motor" << std::endl;
     ctre::phoenix::unmanaged::FeedEnable(5000);
-    testMotor0.setPower(0.5);
+    testMotor0.setPower(0.2);
     sleep_for(seconds(10));
 
 
