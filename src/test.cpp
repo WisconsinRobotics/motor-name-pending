@@ -15,7 +15,9 @@ using namespace std::chrono;
 void printControlGroup(const ControlGroup &obj);
 
 int main() {
+
     ctre::phoenix::platform::can::SetCANInterface("can0");
+    sleep_for(seconds(10));
     Motor testMotor0 {0};
     printControlGroup(testMotor0);
     std::cout << testMotor0.getEncoder() << std::endl;
