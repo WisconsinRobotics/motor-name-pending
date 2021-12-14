@@ -23,7 +23,7 @@ namespace MotorLib {
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
             std::shared_ptr<ControlGroup> getControlGroup (string aName);
             void clearGroup();
-            int32_t getEncoder() const override;
+            double getEncoder() const override;
             void setPrimaryEncoder(std::shared_ptr<ControlGroup> cg);
 
         private:

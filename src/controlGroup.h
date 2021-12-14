@@ -13,7 +13,7 @@ namespace MotorLib {
     class ControlGroup {
         public:
             virtual void setPower(double power) = 0;
-            virtual int32_t getEncoder() const = 0;
+            virtual double getEncoder() const = 0;
             virtual void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) = 0;
             virtual void setReversal(bool inverted) = 0;
             virtual string getName() const = 0;

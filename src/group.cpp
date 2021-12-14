@@ -55,7 +55,7 @@ namespace MotorLib{
     void Group::clearGroup() {
         members.clear();
     }
-    int32_t Group::getEncoder() const {
+    double Group::getEncoder() const {
         return encoderRead->getEncoder();
     }
 }

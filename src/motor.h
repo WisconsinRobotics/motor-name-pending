@@ -21,14 +21,14 @@ namespace MotorLib {
         public:
             Motor(uint8_t ID);
             void setPower(double power);
-            int32_t getEncoder() const;
+            double getEncoder() const;
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             string getName() const;
             string getMembers() const;
 
         private:
-            std::unique_ptr<TalonSRX> motor;
+            std::unique_ptr<TalonFX> motor;
             uint8_t deviceID;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
     };

@@ -5,7 +5,7 @@ using std::to_string;
 
 namespace MotorLib{
     Motor::Motor(uint8_t ID) {
-        this->motor = std::unique_ptr<TalonSRX>(new TalonSRX{ID});
+        this->motor = std::unique_ptr<TalonFX>(new TalonFX{ID});
         deviceID = ID;
     }
     void Motor::setPower(double power) {
@@ -14,7 +14,7 @@ namespace MotorLib{
     string Motor::getName() const {
         return to_string(deviceID);
     }
-    int32_t Motor::getEncoder() const {
+    double Motor::getEncoder() const {
         return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
     }
     void Motor::setReversal(bool inverted) {
