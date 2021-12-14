@@ -23,9 +23,9 @@ int main() {
 
     sleep_for(seconds(10));
     std::cout << "Starting motor" << std::endl;
-
     testMotor0.setPower(0.5);
-    
+    sleep_for(seconds(10));
+
 
     // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     // testMotor0.setPower(0.2);
