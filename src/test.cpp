@@ -20,40 +20,40 @@ int main() {
     Motor testMotor0 {1};
     printControlGroup(testMotor0);
     std::cout << "Starting motor" << std::endl;
-    ctre::phoenix::unmanaged::FeedEnable(5000);
+    ctre::phoenix::unmanaged::FeedEnable(100000);
+    
+
+
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     testMotor0.setPower(0.2);
     sleep_for(seconds(10));
     printControlGroup(testMotor0);
+    testMotor0.setPower(0);
+    sleep_for(seconds(5));
 
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
+    testMotor0.setPower(0.2);
+    sleep_for(seconds(10));
+    printControlGroup(testMotor0);
+    testMotor0.setPower(0);
+    sleep_for(seconds(5));
 
-    // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
-    // 
-    // testMotor0.setPower(0.2);
-    // sleep_for(seconds(10));
-    // testMotor0.setPower(0);
-    // sleep_for(seconds(5));
+    testMotor0.setReversal(true);
 
-    // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
-    // testMotor0.setPower(0.2);
-    // sleep_for(seconds(10));
-    // testMotor0.setPower(0);
-    // sleep_for(seconds(5));
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
+    testMotor0.setPower(0.2);
+    sleep_for(seconds(10));
+    printControlGroup(testMotor0);
+    testMotor0.setPower(0);
+    sleep_for(seconds(5));
 
-    // testMotor0.setReversal(true);
-
-    // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
-    // testMotor0.setPower(0.2);
-    // sleep_for(seconds(10));
-    // testMotor0.setPower(0);
-    // sleep_for(seconds(5));
-
-    // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
-    // testMotor0.setPower(0.2);
-    // sleep_for(seconds(10));
-    // testMotor0.setPower(0);
-    // sleep_for(seconds(5));
-
-    // testMotor0.~Motor();
+    testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
+    testMotor0.setPower(0.2);
+    sleep_for(seconds(10));
+    printControlGroup(testMotor0);
+    testMotor0.setPower(0);
+    sleep_for(seconds(5));
+    printControlGroup(testMotor0);
 };
 
 
