@@ -18,7 +18,7 @@ int main() {
 
     ctre::phoenix::platform::can::SetCANInterface("can0");
     sleep_for(seconds(10));
-    Motor testMotor0 {0};
+    Motor testMotor0 {1};
     printControlGroup(testMotor0);
     std::cout << testMotor0.getEncoder() << std::endl;
     testMotor0.getName();
@@ -31,6 +31,7 @@ int main() {
 
 
     // testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
+    // 
     // testMotor0.setPower(0.2);
     // sleep_for(seconds(10));
     // testMotor0.setPower(0);
