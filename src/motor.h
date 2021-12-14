@@ -3,6 +3,7 @@
 
 #define Phoenix_No_WPI
 #include <stdexcept>
+#include <memory>
 #include "ctre/Phoenix.h"
 #include "ctre/phoenix/platform/Platform.h"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
@@ -25,10 +26,9 @@ namespace MotorLib {
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             string getName() const;
             string getMembers() const;
-            ~Motor();
 
         private:
-            TalonSRX *motor;
+            std::unique_ptr<TalonSRX> motor;
             uint8_t deviceID;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
     };
