@@ -50,6 +50,7 @@ namespace MotorLib{
                 return i;
             }
         }
+        return nullptr;
     }
     void Group::clearGroup() {
         members.clear();
