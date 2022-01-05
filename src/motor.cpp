@@ -7,6 +7,9 @@ namespace MotorLib{
     Motor::Motor(uint8_t ID) {
         this->motor = std::unique_ptr<TalonFX>(new TalonFX{ID});
         deviceID = ID;
+        motor->SetInverted(false);
+        motor->SetSensorPhase(false);
+        motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);
     }
     void Motor::setPower(double power) {
         motor->Set(ControlMode::PercentOutput, power);
@@ -19,6 +22,7 @@ namespace MotorLib{
     }
     void Motor::setReversal(bool inverted) {
         motor->SetInverted(inverted);
+        motor->SetSensorPhase(inverted);
     }
     void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
         switch(inputBehavior) {
