@@ -26,14 +26,14 @@ int main() {
 
 
     testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
-    testMotor0.setPower(0.05);
+    testMotor0.setPower(0.1);
     sleep_for(seconds(2));
     printControlGroup(testMotor0);
     testMotor0.setPower(0);
     sleep_for(seconds(5));
 
     testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
-    testMotor0.setPower(0.05);
+    testMotor0.setPower(0.1);
     sleep_for(seconds(2));
     printControlGroup(testMotor0);
     testMotor0.setPower(0);
@@ -42,14 +42,14 @@ int main() {
     testMotor0.setReversal(true);
 
     testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
-    testMotor0.setPower(0.05);
+    testMotor0.setPower(0.1);
     sleep_for(seconds(2));
     printControlGroup(testMotor0);
     testMotor0.setPower(0);
     sleep_for(seconds(5));
 
     testMotor0.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::BRAKE);
-    testMotor0.setPower(0.05);
+    testMotor0.setPower(0.1);
     sleep_for(seconds(2));
     printControlGroup(testMotor0);
     testMotor0.setPower(0);
