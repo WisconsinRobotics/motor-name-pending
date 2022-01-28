@@ -22,7 +22,6 @@ namespace MotorLib{
     }
     void Motor::setReversal(bool inverted) {
         motor->SetInverted(inverted);
-        motor->SetSensorPhase(inverted);
     }
     void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
         switch(inputBehavior) {
