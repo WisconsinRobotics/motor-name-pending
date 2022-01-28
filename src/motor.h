@@ -30,6 +30,7 @@ namespace MotorLib {
         private:
             std::unique_ptr<TalonFX> motor;
             uint8_t deviceID;
+            bool reversed;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
     };
 }

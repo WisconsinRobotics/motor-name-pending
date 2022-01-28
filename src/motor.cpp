@@ -12,7 +12,11 @@ namespace MotorLib{
         motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);
     }
     void Motor::setPower(double power) {
-        motor->Set(ControlMode::PercentOutput, power);
+        if(reversed) {
+            motor->Set(ControlMode::PercentOutput, -power);
+        } else {
+            motor->Set(ControlMode::PercentOutput, power);
+        }
     }
     string Motor::getName() const {
         return to_string(deviceID);
@@ -21,8 +25,7 @@ namespace MotorLib{
         return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
     }
     void Motor::setReversal(bool inverted) {
-        motor->SetInverted(inverted);
-        motor->SetSensorPhase(inverted);
+        reversed = inverted;
     }
     void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
         switch(inputBehavior) {
