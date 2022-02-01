@@ -14,7 +14,7 @@ namespace MotorLib{
     string Motor::getName() const {
         return to_string(deviceID);
     }
-    double Motor::getEncoder() const {
+    std::optional<double> Motor::getEncoder() const {
         return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
     }
     void Motor::setReversal(bool inverted) {

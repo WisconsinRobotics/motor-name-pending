@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <optional>
 #include "controlGroup.h"
 
 using std::string;
@@ -23,7 +24,7 @@ namespace MotorLib {
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
             std::shared_ptr<ControlGroup> getControlGroup (string aName);
             void clearGroup();
-            double getEncoder() const override;
+            std::optional<double> getEncoder() const override;
             void setPrimaryEncoder(std::shared_ptr<ControlGroup> cg);
             void reset() const override;
 

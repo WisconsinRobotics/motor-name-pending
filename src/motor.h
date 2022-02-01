@@ -21,7 +21,7 @@ namespace MotorLib {
         public:
             Motor(uint8_t ID);
             void setPower(double power);
-            double getEncoder() const;
+            std::optional<double> getEncoder() const;
             void setReversal(bool inverted);
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             string getName() const;

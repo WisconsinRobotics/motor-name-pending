@@ -57,5 +57,5 @@ int main() {
 
 void printControlGroup(const ControlGroup &obj){
     printf("Motor Name:  %s\n", obj.getMembers().c_str());
-    printf("Encoder Value:  %s\n", to_string(obj.getEncoder()).c_str());
+    printf("Encoder Value:  %s\n", to_string(obj.getEncoder().value_or(-1)).c_str());
 }
