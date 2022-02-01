@@ -34,10 +34,12 @@ int main() {
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
+    sleep_for(seconds(5));
     testGroup1.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
+    sleep_for(seconds(5));
     
     testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
     testGroup1.reset();
@@ -46,10 +48,12 @@ int main() {
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
+    sleep_for(seconds(5));
     testGroup1.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
+    sleep_for(seconds(5));
 
     testGroup1.clearGroup();
     printControlGroup(testGroup1);
