@@ -18,6 +18,7 @@ namespace MotorLib {
             virtual void setReversal(bool inverted) = 0;
             virtual string getName() const = 0;
             virtual string getMembers() const = 0;
+            virtual void reset() const = 0;
     };
 }
 

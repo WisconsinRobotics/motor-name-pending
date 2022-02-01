@@ -58,4 +58,9 @@ namespace MotorLib{
     double Group::getEncoder() const {
         return encoderRead->getEncoder();
     }
+    void Group::reset() const {
+        for (auto i : members) {
+            i->reset();
+        }
+    }
 }
