@@ -6,7 +6,7 @@ find_package(Threads REQUIRED)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++17)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_library(IMPL_FILES
