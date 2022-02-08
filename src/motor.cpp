@@ -9,18 +9,23 @@ namespace MotorLib{
         deviceID = ID;
     }
     void Motor::setPower(double power) {
+        const std::lock_guard<std::mutex> lock{this->m};
         motor->Set(ControlMode::PercentOutput, power);
     }
     string Motor::getName() const {
+        const std::lock_guard<std::mutex> lock{this->m};
         return to_string(deviceID);
     }
     std::optional<double> Motor::getEncoder() const {
+        const std::lock_guard<std::mutex> lock{this->m};
         return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
     }
     void Motor::setReversal(bool inverted) {
+        const std::lock_guard<std::mutex> lock{this->m};
         motor->SetInverted(inverted);
     }
     void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
+        const std::lock_guard<std::mutex> lock{this->m};
         switch(inputBehavior) {
             case ZeroPowerBehavior::BRAKE :
                 motor->SetNeutralMode(Brake);
@@ -33,12 +38,14 @@ namespace MotorLib{
         }
     }
     void Motor::resetSettings() const {
+        const std::lock_guard<std::mutex> lock{this->m};
         motor->SetInverted(false);
         motor->SetSensorPhase(false);
         motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);
         motor->SetNeutralMode(Brake);
     }
     string Motor::getMembers() const {
+        const std::lock_guard<std::mutex> lock{this->m};
         return to_string(deviceID) + " is not a Motor Group and has no members!";
     }
 }
