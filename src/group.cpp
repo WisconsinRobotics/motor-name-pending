@@ -65,9 +65,9 @@ namespace MotorLib{
             return encoderRead->getEncoder();
         }
     }
-    void Group::reset() const {
+    void Group::resetSettings() const {
         for (auto i : members) {
-            i->reset();
+            i->resetSettings();
         }
     }
 }

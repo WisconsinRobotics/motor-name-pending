@@ -28,7 +28,7 @@ int main() {
 
     testGroup1.addControlGroup(testMotor1);
     testGroup1.addControlGroup(testMotor2);
-    testGroup1.reset();
+    testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);
     testGroup1.setPower(0.1);
@@ -42,7 +42,7 @@ int main() {
     sleep_for(seconds(5));
     
     testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
-    testGroup1.reset();
+    testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);
     testGroup1.setPower(0.1);

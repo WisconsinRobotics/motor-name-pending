@@ -26,7 +26,7 @@ namespace MotorLib {
             void clearGroup();
             std::optional<double> getEncoder() const override;
             void setPrimaryEncoder(std::shared_ptr<ControlGroup> cg);
-            void reset() const override;
+            void resetSettings() const override;
 
         private:
             std::shared_ptr<ControlGroup> encoderRead;

@@ -32,7 +32,7 @@ namespace MotorLib{
             throw std::invalid_argument("Invalid Argument");
         }
     }
-    void Motor::reset() const {
+    void Motor::resetSettings() const {
         motor->SetInverted(false);
         motor->SetSensorPhase(false);
         motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);

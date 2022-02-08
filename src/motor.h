@@ -26,7 +26,7 @@ namespace MotorLib {
             void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
             string getName() const;
             string getMembers() const;
-            void reset() const;
+            void resetSettings() const;
 
         private:
             std::unique_ptr<TalonFX> motor;
