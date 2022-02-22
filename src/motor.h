@@ -30,7 +30,7 @@ namespace MotorLib {
             void resetSettings() const;
 
         private:
-            std::mutex m;
+            mutable std::mutex m;
             std::unique_ptr<TalonFX> motor;
             uint8_t deviceID;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
