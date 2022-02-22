@@ -2,39 +2,30 @@
 
 
 namespace rosLib {
-    void motorRos::motorRos(MotorLib::ControlGroup &cg, int argc, char** argv) {
-        aControlGroup = cg;
-        ros::init(argc, argv, *cg.getName);
-        motorPower = node.subscribe("/control/motor_system/cmd", 1000);
-        encoder = n.advertise<std::optional<double>>(getEncoder(), 1000);
-        setPower(motorPower);
-        setZeroPowerBehavior(<call>(zeroPowerBehavior));
-        setReverse(<call>(reverse));
-        if(<call>(resetSettings)) {
-            resetSettings();
-        }
-        while(ros::ok()) {
-            ros::spinOnce();
-        }
+    motorRos(std::unordered_set<std::shared_ptr<MotorLib::ControlGroup>> &cgList) {
+        
     }
     void motorRos::spin(bool set) {
-        while(set) {
-            ros::spinOnce();
+        if(!ros::ok()) {
+            return;
+        }
+        do {
+        } while(ros::ok() && set);
     }
     void motorRos::spinOnce() {
-        ros::spinOnce();
+        spin(false);
     }
-    void motorRos::setPower(double power) {
-        aControlGroup.setPower(power);
+    void motorRos::setPower(double power, std::shared_ptr<MotorLib::ControlGroup> ptr) {
+        ptr->setPower(power);
     }
-    std::optional<double> motorRos::getEncoder() const {
-        return aControlGroup.getEncoder();
+    std::optional<double> motorRos::getEncoder(std::shared_ptr<MotorLib::ControlGroup> ptr) const {
+        return ptr->getEncoder();
     }
     void motorRos::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
         aControlGroup.setZeroPowerBehavior(inputBehavior);
     }
-    void motorRos::setReverse(bool inverted) {
-        aControlGroup.setReverse(inverted);
+    void motorRos::setReverse(std_srvs::SetBool inverted, std::shared_ptr<MotorLib::ControlGroup> ptr) {
+        ptr->setReverse(inverted);
     }
     void motorRos::resetSettings() const {
         aControlGroup.resetSettings();

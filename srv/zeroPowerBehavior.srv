@@ -1,3 +1,4 @@
 ZeroPowerBehavior behavior
 ---
-ZeroPowerBehavior behavior
+bool success
+string msg
