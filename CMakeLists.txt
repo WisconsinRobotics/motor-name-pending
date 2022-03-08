@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(wrevamped_motors)
+project(wrevolution)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -9,6 +9,7 @@ project(wrevamped_motors)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
 find_package(Threads REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -107,7 +108,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES wrevamped_motors
+#  LIBRARIES wrevolution
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -120,43 +121,43 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+ ${catkin_INCLUDE_DIRS}
 )
 
 add_library(IMPL_FILES
-    ${CMAKE_SOURCE_DIR}/src/group.cpp
-    ${CMAKE_SOURCE_DIR}/src/motor.cpp
+    src/group.cpp
+    src/motor.cpp
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/wrevamped_motors.cpp
+#   src/${PROJECT_NAME}/wrevolution.cpp
 # )
 
 add_executable(TalonFX_test src/test.cpp)
-target_link_libraries(TalonFX_test IMPL_FILES)
+target_link_libraries(TalonFX_test ${catkin_LIBRARIES} IMPL_FILES)
 
 if (${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "arm-linux-gnueabihf") # Jetson TK1 / Pi
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_Phoenix.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCCI.a)
-	target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixDiagnostics.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixPlatform_socketcan.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCanutils.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCore.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_Phoenix.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_PhoenixCCI.a)
+	target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_PhoenixDiagnostics.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_PhoenixPlatform_socketcan.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_PhoenixCanutils.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/raspberry/libCTRE_PhoenixCore.a)
 elseif (${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "aarch64-linux-gnu") # Jetson TX2
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_Phoenix.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCCI.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixDiagnostics.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixPlatform_socketcan.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCanutils.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCore.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_Phoenix.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_PhoenixCCI.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_PhoenixDiagnostics.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_PhoenixPlatform_socketcan.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_PhoenixCanutils.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/jetsontx/libCTRE_PhoenixCore.a)
 else()
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_Phoenix.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCCI.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixDiagnostics.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixPlatform_socketcan.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCanutils.a)
-    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCore.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_Phoenix.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_PhoenixCCI.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_PhoenixDiagnostics.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_PhoenixPlatform_socketcan.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_PhoenixCanutils.a)
+    target_link_libraries(TalonFX_test ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib/x86-64/libCTRE_PhoenixCore.a)
 endif()
 
 target_link_libraries(TalonFX_test Threads::Threads)
@@ -169,7 +170,7 @@ target_link_libraries(TalonFX_test Threads::Threads)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/wrevamped_motors_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/wrevolution_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -233,7 +234,7 @@ target_link_libraries(TalonFX_test Threads::Threads)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_wrevamped_motors.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_wrevolution.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

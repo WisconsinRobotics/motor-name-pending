@@ -3,7 +3,12 @@
 
 namespace rosLib {
     motorRos(std::unordered_set<std::shared_ptr<MotorLib::ControlGroup>> &cgList) {
-        
+        for(auto x : cgList) {
+            std::unordered_set<boost::function> temp;
+            temp.insert(boost::bind(motorRos::setPower, _1, x)(power));
+            temp.insert(boost::bind(motorRos::getEncoder, x);
+            aMap[x] = temp;
+        }
     }
     void motorRos::spin(bool set) {
         if(!ros::ok()) {
@@ -30,3 +35,4 @@ namespace rosLib {
     void motorRos::resetSettings() const {
         aControlGroup.resetSettings();
     }
+}
