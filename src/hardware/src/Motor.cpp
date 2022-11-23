@@ -1,9 +1,9 @@
 #define Phoenix_No_WPI
-#include "motor.h"
+#include "Motor.h"
 
 using std::to_string;
 
-namespace MotorLib{
+namespace Hardware{
     Motor::Motor(uint8_t ID) {
         this->motor = std::unique_ptr<TalonFX>(new TalonFX{ID});
         deviceID = ID;

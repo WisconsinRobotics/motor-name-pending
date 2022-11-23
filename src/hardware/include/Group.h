@@ -5,13 +5,13 @@
 #include <string>
 #include <memory>
 #include <optional>
-#include "controlGroup.h"
+#include "ControlGroup.h"
 
 using std::string;
 using std::vector;
-using MotorLib::ControlGroup;
+using Hardware::ControlGroup;
 
-namespace MotorLib {
+namespace Hardware {
     class Group : public ControlGroup {
         public:
             Group(string aName);
