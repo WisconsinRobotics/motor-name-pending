@@ -33,7 +33,7 @@ namespace MotorLib {
             std::shared_ptr<ControlGroup> encoderRead;
             string name;
             vector<std::shared_ptr<ControlGroup>> members;
-            std::mutex mutex;
+            mutable std::mutex mutex;
     };
 }
 
