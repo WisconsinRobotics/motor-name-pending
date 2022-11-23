@@ -21,7 +21,7 @@ namespace MotorLib{
     string Motor::getName() const {
         return to_string(deviceID);
     }
-    double Motor::getEncoder() const {
+    std::optional<double> Motor::getEncoder() const {
         return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
     }
     void Motor::setReversal(bool inverted) {
@@ -38,6 +38,12 @@ namespace MotorLib{
             default : 
             throw std::invalid_argument("Invalid Argument");
         }
+    }
+    void Motor::resetSettings() const {
+        motor->SetInverted(false);
+        motor->SetSensorPhase(false);
+        motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);
+        motor->SetNeutralMode(Brake);
     }
     string Motor::getMembers() const {
         return to_string(deviceID) + " is not a Motor Group and has no members!";

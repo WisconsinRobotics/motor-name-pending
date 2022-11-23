@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <optional>
 
 using std::string;
 
@@ -13,11 +14,12 @@ namespace MotorLib {
     class ControlGroup {
         public:
             virtual void setPower(double power) = 0;
-            virtual double getEncoder() const = 0;
+            virtual std::optional<double> getEncoder() const = 0;
             virtual void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) = 0;
             virtual void setReversal(bool inverted) = 0;
             virtual string getName() const = 0;
             virtual string getMembers() const = 0;
+            virtual void resetSettings() const = 0;
     };
 }
 

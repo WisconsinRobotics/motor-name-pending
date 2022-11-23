@@ -7,6 +7,9 @@ namespace MotorLib{
     Group::Group(string aName) {
         name = aName;
     }
+    void Group::setPrimaryEncoder(std::shared_ptr<ControlGroup> cg) {
+        encoderRead = cg;
+    }
     string Group::getName() const {
         return name;
     }
@@ -55,7 +58,16 @@ namespace MotorLib{
     void Group::clearGroup() {
         members.clear();
     }
-    double Group::getEncoder() const {
-        return encoderRead->getEncoder();
+    std::optional<double> Group::getEncoder() const {
+        if(encoderRead == nullptr) {
+            return {};
+        } else {
+            return encoderRead->getEncoder();
+        }
+    }
+    void Group::resetSettings() const {
+        for (auto i : members) {
+            i->resetSettings();
+        }
     }
 }
