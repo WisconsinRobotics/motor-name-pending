@@ -1,6 +1,7 @@
 #ifndef GROUP_H
 #define GROUP_H
 
+#include <mutex>
 #include <vector>
 #include <string>
 #include <memory>
@@ -32,6 +33,7 @@ namespace MotorLib {
             std::shared_ptr<ControlGroup> encoderRead;
             string name;
             vector<std::shared_ptr<ControlGroup>> members;
+            std::mutex mutex;
     };
 }
 
