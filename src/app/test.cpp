@@ -3,14 +3,14 @@
 #include <thread>
 #include <memory>
 #include <string>
-#include "controlGroup.h"
-#include "group.h"
-#include "motor.h"
+#include "ControlGroup.h"
+#include "Group.h"
+#include "Motor.h"
 
 using std::to_string;
-using MotorLib::Motor;
-using MotorLib::ControlGroup;
-using MotorLib::Group;
+using Hardware::Motor;
+using Hardware::ControlGroup;
+using Hardware::Group;
 using namespace std::this_thread;
 using namespace std::chrono;
 
@@ -35,7 +35,7 @@ int main() {
     sleep_for(seconds(5));
     testGroup1.setPower(0);
     sleep_for(seconds(5));
-    testGroup1.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
+    testGroup1.setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
@@ -49,7 +49,7 @@ int main() {
     sleep_for(seconds(5));
     testGroup1.setPower(0);
     sleep_for(seconds(5));
-    testGroup1.setZeroPowerBehavior(MotorLib::ZeroPowerBehavior::COAST);
+    testGroup1.setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
     testGroup1.setPower(0.1);
     sleep_for(seconds(5));
     testGroup1.setPower(0);
