@@ -9,15 +9,14 @@
 #include "ctre/phoenix/platform/Platform.h"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include "ctre/phoenix/cci/Unmanaged_CCI.h"
-#include "controlGroup.h"
+#include "ControlGroup.h"
 
 using namespace ctre::phoenix;
 using namespace ctre::phoenix::platform;
 using namespace ctre::phoenix::motorcontrol;
 using namespace ctre::phoenix::motorcontrol::can;
-using MotorLib::ControlGroup;
 
-namespace MotorLib {
+namespace Hardware {
     class Motor : public ControlGroup {
         public:
             Motor(uint8_t ID);

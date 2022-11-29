@@ -7,7 +7,7 @@
 
 using std::string;
 
-namespace MotorLib {
+namespace Hardware {
     enum class ZeroPowerBehavior {
         BRAKE, COAST
     };

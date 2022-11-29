@@ -1,11 +1,6 @@
-#include "group.h"
-#include <mutex>
+#include "Group.h"
 
-// using std::find;
-using std::swap;
-
-namespace MotorLib{
-    
+namespace Hardware{
     Group::Group(string aName) {
         name = aName;
     }
