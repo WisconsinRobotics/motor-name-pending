@@ -4,6 +4,7 @@
 #define Phoenix_No_WPI
 #include <stdexcept>
 #include <memory>
+#include <mutex>
 #include "ctre/Phoenix.h"
 #include "ctre/phoenix/platform/Platform.h"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
@@ -28,6 +29,7 @@ namespace Hardware {
             void resetSettings() const;
 
         private:
+            mutable std::mutex mutex;
             std::unique_ptr<TalonFX> motor;
             uint8_t deviceID;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
