@@ -29,7 +29,7 @@ namespace Hardware {
             void resetSettings() const;
 
         private:
-            mutable std::mutex m;
+            mutable std::mutex mutex;
             std::unique_ptr<TalonFX> motor;
             uint8_t deviceID;
             static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
