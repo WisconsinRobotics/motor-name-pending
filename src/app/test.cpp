@@ -1,6 +1,8 @@
 #include "ControlGroup.h"
 #include "Group.h"
 #include "Motor.h"
+#include "ctre/phoenix/platform/Platform.h"
+#include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include <chrono>
 #include <iostream>
 #include <memory>
@@ -10,20 +12,26 @@
 using Hardware::ControlGroup;
 using Hardware::Group;
 using Hardware::Motor;
-using std::to_string;
-using namespace std::this_thread;
-using namespace std::chrono;
+using std::this_thread::sleep_for;
 
 void printControlGroup(const ControlGroup &obj);
 
-int main() {
+constexpr int32_t FEED_ENABLE_TIMEOUT_MILLISECONDS{100000};
+constexpr int32_t MOTOR_1_ID{1};
+constexpr int32_t MOTOR_2_ID{2};
+constexpr double SLOW_SPEED{0.1};
+constexpr std::chrono::seconds LONG_WAIT{5};
+
+auto main() -> int32_t {
+
+    short int some_num = 0;
 
     ctre::phoenix::platform::can::SetCANInterface("can0");
     std::cout << "Starting motor" << std::endl;
-    ctre::phoenix::unmanaged::FeedEnable(100000);
+    ctre::phoenix::unmanaged::FeedEnable(FEED_ENABLE_TIMEOUT_MILLISECONDS);
 
-    std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(1);
-    std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(2);
+    std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(MOTOR_1_ID);
+    std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID);
     Group testGroup1{"testGroup1"};
 
     testGroup1.addControlGroup(testMotor1);
@@ -31,36 +39,36 @@ int main() {
     testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);
-    testGroup1.setPower(0.1);
-    sleep_for(seconds(5));
+    testGroup1.setPower(SLOW_SPEED);
+    sleep_for(LONG_WAIT);
     testGroup1.setPower(0);
-    sleep_for(seconds(5));
+    sleep_for(LONG_WAIT);
     testGroup1.setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
-    testGroup1.setPower(0.1);
-    sleep_for(seconds(5));
+    testGroup1.setPower(SLOW_SPEED);
+    sleep_for(LONG_WAIT);
     testGroup1.setPower(0);
-    sleep_for(seconds(5));
+    sleep_for(LONG_WAIT);
 
     testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
     testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);
-    testGroup1.setPower(0.1);
-    sleep_for(seconds(5));
+    testGroup1.setPower(SLOW_SPEED);
+    sleep_for(LONG_WAIT);
     testGroup1.setPower(0);
-    sleep_for(seconds(5));
+    sleep_for(LONG_WAIT);
     testGroup1.setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
-    testGroup1.setPower(0.1);
-    sleep_for(seconds(5));
+    testGroup1.setPower(SLOW_SPEED);
+    sleep_for(LONG_WAIT);
     testGroup1.setPower(0);
-    sleep_for(seconds(5));
+    sleep_for(LONG_WAIT);
 
     testGroup1.clearGroup();
     printControlGroup(testGroup1);
 };
 
 void printControlGroup(const ControlGroup &obj) {
-    printf("Motor Name:  %s\n", obj.getMembers().c_str());
-    printf("Encoder Value:  %s\n",
-           to_string(obj.getEncoder().value_or(-1)).c_str());
+    std::cout << "Motor Name:  " << obj.getName() << std::endl;
+    std::cout << "Encoder Value:  " << obj.getEncoder().value_or(-1)
+              << std::endl;
 }
