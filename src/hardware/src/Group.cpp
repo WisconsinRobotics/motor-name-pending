@@ -1,72 +1,76 @@
 #include "Group.h"
 
-namespace Hardware {
-Group::Group(string aName) { name = aName; }
+#include <optional>
+#include <stdexcept>
+#include <utility>
 
-void Group::setPrimaryEncoder(std::shared_ptr<ControlGroup> cg) {
+namespace Hardware {
+Group::Group(std::string aName) : name{std::move(aName)} {}
+
+void Group::setPrimaryEncoder(std::shared_ptr<ControlGroup> controlGroup) {
     const std::lock_guard lock{mutex};
-    encoderRead = cg;
+    encoderRead = std::move(controlGroup);
 }
 
-string Group::getName() const {
+auto Group::getName() const -> std::string {
     const std::lock_guard lock{mutex};
     return name;
 }
 
-void Group::addControlGroup(std::shared_ptr<ControlGroup> cg) {
+void Group::addControlGroup(const std::shared_ptr<ControlGroup> &controlGroup) {
     const std::lock_guard lock{mutex};
-    members.push_back(cg);
+    members.push_back(controlGroup);
 }
 
-void Group::removeControlGroup(std::shared_ptr<ControlGroup> cg) {
+void Group::removeControlGroup(ControlGroup &controlGroup) {
     const std::lock_guard lock{mutex};
     for (int i = 0; i < this->members.size(); i++) {
         std::shared_ptr<ControlGroup> member = this->members.at(i);
-        if (member->getName() == cg->getName()) {
+        if (member->getName() == controlGroup.getName()) {
             this->members.erase(this->members.begin() + i);
             break;
         }
     }
 }
 
-string Group::getMembers() const {
+auto Group::getMembers() const -> std::string {
     const std::lock_guard lock{mutex};
-    string membersNames = "";
-    for (auto i : members) {
-        membersNames.append(i->getName()).append(" ");
+    std::string membersNames{};
+    for (const auto &member : members) {
+        membersNames.append(member->getName()).append(" ");
     }
     return membersNames;
 }
 
 void Group::setPower(double power) {
     const std::lock_guard lock{mutex};
-    for (auto i : members) {
-        i->setPower(power);
+    for (const auto &member : members) {
+        member->setPower(power);
     }
 }
 
 void Group::setReversal(bool inverted) {
     const std::lock_guard lock{mutex};
-    for (auto i : members) {
-        i->setReversal(inverted);
+    for (const auto &member : members) {
+        member->setReversal(inverted);
     }
 }
 
 void Group::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
     const std::lock_guard lock{mutex};
-    for (auto i : members) {
-        i->setZeroPowerBehavior(inputBehavior);
+    for (const auto &member : members) {
+        member->setZeroPowerBehavior(inputBehavior);
     }
 }
 
-std::shared_ptr<ControlGroup> Group::getControlGroup(string aName) {
+auto Group::getControlGroup(const std::string &aName) -> ControlGroup & {
     const std::lock_guard lock{mutex};
-    for (auto i : members) {
-        if (i->getName() == aName) {
-            return i;
+    for (const auto &member : members) {
+        if (member->getName() == aName) {
+            return *member;
         }
     }
-    return nullptr;
+    throw std::invalid_argument{"No member with name " + aName};
 }
 
 void Group::clearGroup() {
@@ -74,19 +78,18 @@ void Group::clearGroup() {
     members.clear();
 }
 
-std::optional<double> Group::getEncoder() const {
+auto Group::getEncoder() const -> std::optional<double> {
     const std::lock_guard lock{mutex};
     if (encoderRead == nullptr) {
-        return {};
-    } else {
-        return encoderRead->getEncoder();
+        return std::nullopt;
     }
+    return encoderRead->getEncoder();
 }
 
 void Group::resetSettings() const {
     const std::lock_guard lock{mutex};
-    for (auto i : members) {
-        i->resetSettings();
+    for (const auto &member : members) {
+        member->resetSettings();
     }
 }
 } // namespace Hardware

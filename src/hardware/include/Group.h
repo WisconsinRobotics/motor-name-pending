@@ -13,13 +13,13 @@ class Group : public ControlGroup {
 public:
     explicit Group(std::string aName);
     auto getName() const -> std::string override;
-    void addControlGroup(std::shared_ptr<ControlGroup> controlGroup);
-    void removeControlGroup(std::shared_ptr<ControlGroup> controlGroup);
+    void addControlGroup(const std::shared_ptr<ControlGroup> &controlGroup);
+    void removeControlGroup(ControlGroup &controlGroup);
     auto getMembers() const -> std::string override;
     void setPower(double power) override;
     void setReversal(bool inverted) override;
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
-    auto getControlGroup(std::string aName) -> std::shared_ptr<ControlGroup>;
+    auto getControlGroup(const std::string &aName) -> ControlGroup &;
     void clearGroup();
     auto getEncoder() const -> std::optional<double> override;
     void setPrimaryEncoder(std::shared_ptr<ControlGroup> controlGroup);
