@@ -15,18 +15,18 @@ using std::vector;
 namespace Hardware {
 class Group : public ControlGroup {
 public:
-    Group(string aName);
-    string getName() const override;
-    void addControlGroup(std::shared_ptr<ControlGroup> cg);
-    void removeControlGroup(std::shared_ptr<ControlGroup> cg);
-    string getMembers() const override;
+    explicit Group(string aName);
+    auto getName() const -> string override;
+    void addControlGroup(std::shared_ptr<ControlGroup> controlGroup);
+    void removeControlGroup(std::shared_ptr<ControlGroup> controlGroup);
+    auto getMembers() const -> string override;
     void setPower(double power) override;
     void setReversal(bool inverted) override;
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
-    std::shared_ptr<ControlGroup> getControlGroup(string aName);
+    auto getControlGroup(string aName) -> std::shared_ptr<ControlGroup>;
     void clearGroup();
-    std::optional<double> getEncoder() const override;
-    void setPrimaryEncoder(std::shared_ptr<ControlGroup> cg);
+    auto getEncoder() const -> std::optional<double> override;
+    void setPrimaryEncoder(std::shared_ptr<ControlGroup> controlGroup);
     void resetSettings() const override;
 
 private:
