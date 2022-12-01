@@ -25,7 +25,8 @@ private:
     mutable std::mutex mutex;
     std::unique_ptr<TalonFX> motor;
     uint8_t deviceID;
-    static constexpr int8_t PRIMARY_CLOSED_LOOP_PID = 0;
+    static constexpr int8_t PRIMARY_CLOSED_LOOP_PID{0};
+    static constexpr int32_t ENCODER_RESET_TIMEOUT_MILLISECONDS{100};
 };
 } // namespace Hardware
 
