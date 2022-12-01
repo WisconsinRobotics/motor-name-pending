@@ -1,16 +1,16 @@
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <memory>
-#include <string>
 #include "ControlGroup.h"
 #include "Group.h"
 #include "Motor.h"
+#include <chrono>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <thread>
 
-using std::to_string;
-using Hardware::Motor;
 using Hardware::ControlGroup;
 using Hardware::Group;
+using Hardware::Motor;
+using std::to_string;
 using namespace std::this_thread;
 using namespace std::chrono;
 
@@ -24,7 +24,7 @@ int main() {
 
     std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(1);
     std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(2);
-    Group testGroup1 {"testGroup1"};
+    Group testGroup1{"testGroup1"};
 
     testGroup1.addControlGroup(testMotor1);
     testGroup1.addControlGroup(testMotor2);
@@ -40,7 +40,7 @@ int main() {
     sleep_for(seconds(5));
     testGroup1.setPower(0);
     sleep_for(seconds(5));
-    
+
     testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
     testGroup1.resetSettings();
     printControlGroup(testGroup1);
@@ -57,13 +57,10 @@ int main() {
 
     testGroup1.clearGroup();
     printControlGroup(testGroup1);
-
-
-    
 };
 
-
-void printControlGroup(const ControlGroup &obj){
+void printControlGroup(const ControlGroup &obj) {
     printf("Motor Name:  %s\n", obj.getMembers().c_str());
-    printf("Encoder Value:  %s\n", to_string(obj.getEncoder().value_or(-1)).c_str());
+    printf("Encoder Value:  %s\n",
+           to_string(obj.getEncoder().value_or(-1)).c_str());
 }
