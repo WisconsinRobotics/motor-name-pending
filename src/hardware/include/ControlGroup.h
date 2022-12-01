@@ -14,7 +14,8 @@ public:
     virtual void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) = 0;
     virtual void setReversal(bool inverted) = 0;
     [[nodiscard]] virtual auto getName() const -> std::string = 0;
-    [[nodiscard]] virtual auto getMembers() const -> std::string = 0;
+    [[nodiscard]] virtual auto getMembers() const
+        -> std::string = 0; // TODO: Is this necessary?
     virtual void resetSettings() const = 0;
 
     ControlGroup() = default;
