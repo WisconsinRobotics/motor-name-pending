@@ -8,22 +8,18 @@
 #include <string>
 #include <vector>
 
-using Hardware::ControlGroup;
-using std::string;
-using std::vector;
-
 namespace Hardware {
 class Group : public ControlGroup {
 public:
-    explicit Group(string aName);
-    auto getName() const -> string override;
+    explicit Group(std::string aName);
+    auto getName() const -> std::string override;
     void addControlGroup(std::shared_ptr<ControlGroup> controlGroup);
     void removeControlGroup(std::shared_ptr<ControlGroup> controlGroup);
-    auto getMembers() const -> string override;
+    auto getMembers() const -> std::string override;
     void setPower(double power) override;
     void setReversal(bool inverted) override;
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
-    auto getControlGroup(string aName) -> std::shared_ptr<ControlGroup>;
+    auto getControlGroup(std::string aName) -> std::shared_ptr<ControlGroup>;
     void clearGroup();
     auto getEncoder() const -> std::optional<double> override;
     void setPrimaryEncoder(std::shared_ptr<ControlGroup> controlGroup);
@@ -31,8 +27,8 @@ public:
 
 private:
     std::shared_ptr<ControlGroup> encoderRead;
-    string name;
-    vector<std::shared_ptr<ControlGroup>> members;
+    std::string name;
+    std::vector<std::shared_ptr<ControlGroup>> members;
     mutable std::mutex mutex;
 };
 } // namespace Hardware

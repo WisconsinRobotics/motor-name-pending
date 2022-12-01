@@ -1,32 +1,25 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-#define Phoenix_No_WPI
 #include "ControlGroup.h"
-#include "ctre/Phoenix.h"
-#include "ctre/phoenix/cci/Unmanaged_CCI.h"
-#include "ctre/phoenix/platform/Platform.h"
-#include "ctre/phoenix/unmanaged/Unmanaged.h"
+#define Phoenix_No_WPI
+#include "ctre/phoenix/motorcontrol/can/TalonFX.h"
 #include <memory>
 #include <mutex>
 #include <stdexcept>
 
-using namespace ctre::phoenix;
-using namespace ctre::phoenix::platform;
-using namespace ctre::phoenix::motorcontrol;
-using namespace ctre::phoenix::motorcontrol::can;
-
+using ctre::phoenix::motorcontrol::can::TalonFX;
 namespace Hardware {
 class Motor : public ControlGroup {
 public:
-    Motor(uint8_t ID);
-    void setPower(double power);
-    std::optional<double> getEncoder() const;
-    void setReversal(bool inverted);
-    void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior);
-    string getName() const;
-    string getMembers() const;
-    void resetSettings() const;
+    explicit Motor(uint8_t motorID);
+    void setPower(double power) override;
+    auto getEncoder() const -> std::optional<double> override;
+    void setReversal(bool inverted) override;
+    void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
+    auto getName() const -> std::string override;
+    auto getMembers() const -> std::string override;
+    void resetSettings() const override;
 
 private:
     mutable std::mutex mutex;

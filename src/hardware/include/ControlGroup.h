@@ -1,11 +1,9 @@
 #ifndef CONTROL_GROUP_H
 #define CONTROL_GROUP_H
 
-#include <optional>
 #include <cstdint>
+#include <optional>
 #include <string>
-
-using std::string;
 
 namespace Hardware {
 enum class ZeroPowerBehavior { BRAKE, COAST };
@@ -15,16 +13,16 @@ public:
     [[nodiscard]] virtual auto getEncoder() const -> std::optional<double> = 0;
     virtual void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) = 0;
     virtual void setReversal(bool inverted) = 0;
-    [[nodiscard]] virtual auto getName() const -> string = 0;
-    [[nodiscard]] virtual auto getMembers() const -> string = 0;
+    [[nodiscard]] virtual auto getName() const -> std::string = 0;
+    [[nodiscard]] virtual auto getMembers() const -> std::string = 0;
     virtual void resetSettings() const = 0;
 
     ControlGroup() = default;
     virtual ~ControlGroup() = default;
-    ControlGroup(const ControlGroup&) = delete;
-    auto operator=(const ControlGroup&) -> ControlGroup& = delete;
-    ControlGroup(ControlGroup&&) = delete;
-    auto operator=(ControlGroup&&) -> ControlGroup& = delete;
+    ControlGroup(const ControlGroup &) = delete;
+    auto operator=(const ControlGroup &) -> ControlGroup & = delete;
+    ControlGroup(ControlGroup &&) = delete;
+    auto operator=(ControlGroup &&) -> ControlGroup & = delete;
 };
 } // namespace Hardware
 
