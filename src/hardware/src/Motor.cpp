@@ -1,51 +1,68 @@
 #define Phoenix_No_WPI
 #include "Motor.h"
+#include "ctre/phoenix/motorcontrol/NeutralMode.h"
+#include "ctre/phoenix/motorcontrol/can/TalonFX.h"
+#include <optional>
+
+#include <memory>
 
 using std::to_string;
 
-namespace Hardware{
-    Motor::Motor(uint8_t ID) {
-        this->motor = std::unique_ptr<TalonFX>(new TalonFX{ID});
-        deviceID = ID;
-    }
-    void Motor::setPower(double power) {
-        const std::lock_guard lock{mutex};
-        motor->Set(ControlMode::PercentOutput, power);
-    }
-    string Motor::getName() const {
-        const std::lock_guard lock{mutex};
-        return to_string(deviceID);
-    }
-    std::optional<double> Motor::getEncoder() const {
-        const std::lock_guard lock{mutex};
-        return motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID);
-    }
-    void Motor::setReversal(bool inverted) {
-        const std::lock_guard lock{mutex};
-        motor->SetInverted(inverted);
-    }
-    void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
-        const std::lock_guard lock{mutex};
-        switch(inputBehavior) {
-            case ZeroPowerBehavior::BRAKE :
-                motor->SetNeutralMode(Brake);
-                break;
-            case ZeroPowerBehavior::COAST :
-                motor->SetNeutralMode(Coast);
-                break;
-            default : 
-            throw std::invalid_argument("Invalid Argument");
-        }
-    }
-    void Motor::resetSettings() const {
-        const std::lock_guard lock{mutex};
-        motor->SetInverted(false);
-        motor->SetSensorPhase(false);
-        motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID, 100);
-        motor->SetNeutralMode(Brake);
-    }
-    string Motor::getMembers() const {
-        const std::lock_guard lock{mutex};
-        return to_string(deviceID) + " is not a Motor Group and has no members!";
+namespace Hardware {
+
+using ctre::phoenix::motorcontrol::ControlMode;
+using ctre::phoenix::motorcontrol::NeutralMode;
+
+Motor::Motor(uint8_t motorID)
+    : motor{std::make_unique<TalonFX>(motorID)},
+      deviceID{motorID} {}
+
+void Motor::setPower(double power) {
+    const std::lock_guard lock{mutex};
+    motor->Set(ControlMode::PercentOutput, power);
+}
+
+auto Motor::getName() const -> std::string {
+    const std::lock_guard lock{mutex};
+    return to_string(deviceID);
+}
+
+auto Motor::getEncoder() const -> std::optional<double> {
+    const std::lock_guard lock{mutex};
+    return std::make_optional(
+        motor->GetSelectedSensorPosition(PRIMARY_CLOSED_LOOP_PID));
+}
+
+void Motor::setReversal(bool inverted) {
+    const std::lock_guard lock{mutex};
+    motor->SetInverted(inverted);
+}
+
+void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
+    const std::lock_guard lock{mutex};
+    switch (inputBehavior) {
+    case ZeroPowerBehavior::BRAKE:
+        motor->SetNeutralMode(NeutralMode::Brake);
+        break;
+    case ZeroPowerBehavior::COAST:
+        motor->SetNeutralMode(NeutralMode::Coast);
+        break;
+    default:
+        throw std::invalid_argument("Invalid Argument");
     }
 }
+
+void Motor::resetSettings() const {
+    const std::lock_guard lock{mutex};
+    motor->SetInverted(false);
+    motor->SetSensorPhase(false);
+    motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID,
+                                     ENCODER_RESET_TIMEOUT_MILLISECONDS);
+    motor->SetNeutralMode(NeutralMode::Brake);
+}
+
+auto Motor::getMembers() const -> std::string {
+    const std::lock_guard lock{mutex};
+    return to_string(deviceID) + " is not a Motor Group and has no members!";
+}
+} // namespace Hardware

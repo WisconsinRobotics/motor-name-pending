@@ -1,8 +1,3 @@
 {
-    "C_Cpp.default.includePath": [
-        "include/*"
-    ],
-    "files.associations": {
-        "thread": "cpp"
-    }
+    "editor.formatOnSave": true
 }
