@@ -7,3 +7,5 @@ target_sources(hardware
 )
 
 target_include_directories(hardware PUBLIC include)
+
+MakeTalonTarget(hardware)
