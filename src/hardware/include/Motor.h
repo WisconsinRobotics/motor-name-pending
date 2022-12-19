@@ -9,6 +9,7 @@
 #include <stdexcept>
 
 using ctre::phoenix::motorcontrol::can::TalonFX;
+
 namespace Hardware {
 class Motor : public ControlGroup {
 public:
@@ -19,7 +20,7 @@ public:
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
     auto getName() const -> std::string override;
     auto getMembers() const -> std::string override;
-    void resetSettings() const override;
+    void resetSettings() override;
 
 private:
     mutable std::mutex mutex;

@@ -52,7 +52,7 @@ void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
     }
 }
 
-void Motor::resetSettings() const {
+void Motor::resetSettings() {
     const std::lock_guard lock{mutex};
     motor->SetInverted(false);
     motor->SetSensorPhase(false);

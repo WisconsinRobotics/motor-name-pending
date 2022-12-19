@@ -86,7 +86,7 @@ auto Group::getEncoder() const -> std::optional<double> {
     return encoderRead->getEncoder();
 }
 
-void Group::resetSettings() const {
+void Group::resetSettings() {
     const std::lock_guard lock{mutex};
     for (const auto &member : members) {
         member->resetSettings();

@@ -23,7 +23,7 @@ public:
     void clearGroup();
     auto getEncoder() const -> std::optional<double> override;
     void setPrimaryEncoder(std::shared_ptr<ControlGroup> controlGroup);
-    void resetSettings() const override;
+    void resetSettings() override;
 
 private:
     std::shared_ptr<ControlGroup> encoderRead;
