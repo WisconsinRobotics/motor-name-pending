@@ -7,17 +7,17 @@
 namespace RosHandler::RosHandlerCore {
 
 template <RosMessage T>
-class RosServiceAction {
+class RosSubscribedAction {
 public:
-    RosServiceAction(const ros::NodeHandle &node, std::string_view topicName, uint32_t queue_size, const ros::Duration &maxResponseTime)
-        : server(node.subscribe<T>(topicName, queue_size, &RosServiceAction<T>::subscriberCallback, this)),
+    RosSubscribedAction<T>(const ros::NodeHandle &node, std::string_view topicName, uint32_t queue_size, const ros::Duration &maxResponseTime)
+        : server(node.subscribe<T>(topicName, queue_size, &RosSubscribedAction<T>::subscriberCallback, this)),
           maxResponseTime{maxResponseTime} {}
 
-    virtual ~RosServiceAction() = default;
-    RosServiceAction(const RosServiceAction &) = delete;
-    auto operator=(const RosServiceAction &) -> RosServiceAction & = delete;
-    RosServiceAction(RosServiceAction &&) = delete;
-    auto operator=(RosServiceAction &&) = delete;
+    virtual ~RosSubscribedAction() = default;
+    RosSubscribedAction(const RosSubscribedAction &) = delete;
+    auto operator=(const RosSubscribedAction &) -> RosSubscribedAction & = delete;
+    RosSubscribedAction(RosSubscribedAction &&) = delete;
+    auto operator=(RosSubscribedAction &&) = delete;
 
 private:
     void subscriberCallback(const ros::MessageEvent<T const> &event) {

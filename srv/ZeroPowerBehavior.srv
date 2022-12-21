@@ -1,4 +1,6 @@
-ZeroPowerBehavior behavior
+uint8 ZERO_POWER_BEHAVIOR_COAST = 1
+uint8 ZERO_POWER_BEHAVIOR_BRAKE = 0
+uint8 behavior
 ---
 bool success
 string msg

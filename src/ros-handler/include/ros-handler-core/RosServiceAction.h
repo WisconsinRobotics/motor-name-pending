@@ -9,7 +9,7 @@ namespace RosHandler::RosHandlerCore {
 template <RosService T>
 class RosServiceAction {
 public:
-    RosServiceAction(const ros::NodeHandle &node, std::string_view serviceName, const ros::Duration &maxResponseTime)
+    RosServiceAction<T>(const ros::NodeHandle &node, std::string_view serviceName, const ros::Duration &maxResponseTime)
         : server(node.advertiseService<T>(serviceName, &RosServiceAction<T>::serviceCallback, this)),
           maxResponseTime{maxResponseTime} {}
 
@@ -20,16 +20,16 @@ public:
     auto operator=(RosServiceAction &&) = delete;
 
 private:
-    void serviceCallback(const ros::ServiceEvent<typename T::Request, typename T::Response> &event) {
+    auto serviceCallback(const ros::ServiceEvent<typename T::Request, typename T::Response> &event) -> bool {
         const auto responseDelay = ros::Time::now() - event.getReceiptTime();
         if (responseDelay > maxResponseTime) {
             ROS_WARN_STREAM(
                 "Response on service '" << server.getService() << "' is taking longer than expected: Exp: " << maxResponseTime << " Act: " << responseDelay);
         }
-        onMessageReceived(event.getRequest(), event.getResponse());
+        return onMessageReceived(event.getRequest(), event.getResponse());
     }
 
-    virtual void onServiceRequest(typename T::Request &req, typename T::Response &resp) = 0;
+    virtual auto onServiceRequest(typename T::Request &req, typename T::Response &resp) -> bool = 0;
 
     const ros::ServiceServer server;
     const ros::Duration maxResponseTime;

@@ -5,13 +5,13 @@ namespace RosHandler::RosHandlerCore {
 
 template <class T>
 concept RosMessage = requires {
-    T::ConstPtr;
+    typename T::ConstPtr;
 };
 
 template <class T>
 concept RosService = requires {
-    T::Request;
-    T::Response;
+    typename T::Request;
+    typename T::Response;
 };
 
 } // namespace RosHandler::RosHandlerCore

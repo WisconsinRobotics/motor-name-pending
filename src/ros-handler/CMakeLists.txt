@@ -3,6 +3,7 @@ add_library(ros-handler)
 target_sources(ros-handler
     PRIVATE
     src/ros-handler-core/RosTimedAction.cpp
+    src/ros-handler-core/ControlGroupRosTimedAction.cpp
     src/EncoderTimedAction.cpp
 )
 
