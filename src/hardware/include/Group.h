@@ -14,7 +14,7 @@ public:
     explicit Group(std::string aName);
     auto getName() const -> std::string override;
     void addControlGroup(const std::shared_ptr<ControlGroup> &controlGroup);
-    void removeControlGroup(ControlGroup &controlGroup);
+    void removeControlGroup(const ControlGroup &controlGroup);
     auto getMembers() const -> std::string override;
     void setPower(double power) override;
     void setReversal(bool inverted) override;

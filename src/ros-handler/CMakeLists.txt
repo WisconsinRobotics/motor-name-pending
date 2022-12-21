@@ -2,7 +2,8 @@ add_library(ros-handler)
 
 target_sources(ros-handler
     PRIVATE
-    src/TimedRosAction.cpp
+    src/ros-handler-core/RosTimedAction.cpp
+    src/EncoderTimedAction.cpp
 )
 
 target_link_libraries(ros-handler PRIVATE hardware)

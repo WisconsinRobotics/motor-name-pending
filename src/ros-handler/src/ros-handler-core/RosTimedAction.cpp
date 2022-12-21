@@ -1,15 +1,15 @@
-#include "TimedRosAction.h"
-#include "ros/node_handle.h"
+#include "ros-handler-core/RosTimedAction.h"
 
-namespace RosHandler {
-TimedRosAction::TimedRosAction(const ros::Rate &rate,
+namespace RosHandler::RosHandlerCore {
+
+RosTimedAction::RosTimedAction(const ros::Rate &rate,
                                const ros::NodeHandle &node,
                                std::string_view actionName)
-    : timer{node.createTimer(rate, &TimedRosAction::timerCallback, this)},
+    : timer{node.createTimer(rate, &RosTimedAction::timerCallback, this)},
       expectedRate{rate},
       actionName{actionName} {}
 
-void TimedRosAction::timerCallback(const ros::TimerEvent &event) {
+void RosTimedAction::timerCallback(const ros::TimerEvent &event) {
     // Timer monitor code
     const auto timingDifference{event.current_expected - event.current_real};
     const auto relativeDifference{std::abs((timingDifference - expectedRate.expectedCycleTime()).toSec() / expectedRate.expectedCycleTime().toSec())};
@@ -22,4 +22,5 @@ void TimedRosAction::timerCallback(const ros::TimerEvent &event) {
     // Run inheritance-defined callback
     onTimerEvent(event);
 }
-} // namespace RosHandler
+
+} // namespace RosHandler::RosHandlerCore

@@ -8,7 +8,7 @@ project(wrevolution)
 # # if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 # # is used, also find other catkin packages
 find_package(Threads REQUIRED)
-find_package(catkin REQUIRED COMPONENTS roscpp)
+find_package(catkin REQUIRED COMPONENTS roscpp message_generation)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -58,11 +58,12 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 # )
 
 # # Generate services in the 'srv' folder
-# add_service_files(
-# FILES
-# Service1.srv
-# Service2.srv
-# )
+add_service_files(
+    FILES
+    ResetSettings.srv
+    Reverse.srv
+    ZeroPowerBehavior.srv
+)
 
 # # Generate actions in the 'action' folder
 # add_action_files(
@@ -111,7 +112,7 @@ catkin_package(
     # INCLUDE_DIRS include
     # LIBRARIES wrevolution
     # CATKIN_DEPENDS other_catkin_pkg
-    # DEPENDS system_lib
+    DEPENDS message_runtime
 )
 
 # ##########
