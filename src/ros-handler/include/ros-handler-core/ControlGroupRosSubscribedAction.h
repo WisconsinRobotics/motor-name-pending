@@ -13,11 +13,12 @@ template <RosMessage T>
 class ControlGroupRosSubscribedAction : public RosSubscribedAction<T> {
 public:
     ControlGroupRosSubscribedAction(
-        const ros::NodeHandle &node,
+        ros::NodeHandle &node,
         std::shared_ptr<ControlGroup> controlGroup,
         const std::string &subscriptionName,
-        const ros::Duration &maxResponseTime)
-        : RosSubscribedAction<T>{node, controlGroup->getName() + "/" + subscriptionName, maxResponseTime},
+        const ros::Duration &maxResponseTime,
+        uint32_t queueSize)
+        : RosSubscribedAction<T>{node, controlGroup->getName() + "/" + subscriptionName, queueSize, maxResponseTime},
           controlGroup{std::move(controlGroup)} {}
 
 protected:

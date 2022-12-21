@@ -8,15 +8,16 @@ namespace RosHandler {
 using RosHandlerCore::ControlGroupRosServiceAction;
 using wrevolution::ZeroPowerBehavior;
 
-ZeroPowerBehaviorServiceAction::ZeroPowerBehaviorServiceAction(const ros::NodeHandle &node,
+ZeroPowerBehaviorServiceAction::ZeroPowerBehaviorServiceAction(ros::NodeHandle &node,
                                                                std::shared_ptr<ControlGroup> controlGroup)
     : ControlGroupRosServiceAction<ZeroPowerBehavior>{node,
                                                       std::move(controlGroup),
                                                       "zero_power_behavior",
                                                       ros::Duration{ZERO_POWER_MAX_RESPONSE_DELAY_SECONDS}} {}
 
-auto ZeroPowerBehaviorServiceAction::onServiceRequest(ZeroPowerBehavior::Request &req,
+auto ZeroPowerBehaviorServiceAction::onServiceRequest(const ZeroPowerBehavior::Request &req,
                                                       ZeroPowerBehavior::Response &resp) -> bool {
+    resp.success = 0U;
     switch (req.behavior) {
     case ZeroPowerBehavior::Request::ZERO_POWER_BEHAVIOR_BRAKE:
         controlGroup->setZeroPowerBehavior(Hardware::ZeroPowerBehavior::BRAKE);

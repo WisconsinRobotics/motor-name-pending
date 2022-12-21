@@ -9,8 +9,8 @@ namespace RosHandler::RosHandlerCore {
 template <RosMessage T>
 class RosSubscribedAction {
 public:
-    RosSubscribedAction<T>(const ros::NodeHandle &node, std::string_view topicName, uint32_t queue_size, const ros::Duration &maxResponseTime)
-        : server(node.subscribe<T>(topicName, queue_size, &RosSubscribedAction<T>::subscriberCallback, this)),
+    RosSubscribedAction(ros::NodeHandle &node, const std::string &topicName, uint32_t queue_size, const ros::Duration &maxResponseTime)
+        : server{node.subscribe(topicName, queue_size, &RosSubscribedAction<T>::subscriberCallback, this)},
           maxResponseTime{maxResponseTime} {}
 
     virtual ~RosSubscribedAction() = default;

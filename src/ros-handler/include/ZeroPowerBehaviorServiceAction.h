@@ -11,10 +11,10 @@ using RosHandlerCore::ControlGroupRosServiceAction;
 
 class ZeroPowerBehaviorServiceAction : public ControlGroupRosServiceAction<wrevolution::ZeroPowerBehavior> {
 public:
-    ZeroPowerBehaviorServiceAction(const ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup);
+    ZeroPowerBehaviorServiceAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup);
 
 private:
-    auto onServiceRequest(wrevolution::ZeroPowerBehavior::Request &req, wrevolution::ZeroPowerBehavior::Response &resp) -> bool override;
+    auto onServiceRequest(const wrevolution::ZeroPowerBehavior::Request &req, wrevolution::ZeroPowerBehavior::Response &resp) -> bool override;
 
     static constexpr double ZERO_POWER_MAX_RESPONSE_DELAY_SECONDS{0.5};
 };

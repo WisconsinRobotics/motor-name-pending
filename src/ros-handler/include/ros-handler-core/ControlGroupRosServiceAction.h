@@ -13,7 +13,7 @@ template <RosService T>
 class ControlGroupRosServiceAction : public RosServiceAction<T> {
 public:
     ControlGroupRosServiceAction(
-        const ros::NodeHandle &node,
+        ros::NodeHandle &node,
         std::shared_ptr<ControlGroup> controlGroup,
         const std::string &serviceName,
         const ros::Duration &maxResponseTime)
