@@ -6,9 +6,9 @@
 namespace RosHandler {
 using Hardware::ControlGroup;
 
-EncoderTimedAction::EncoderTimedAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup)
+EncoderTimedAction::EncoderTimedAction(ros::NodeHandle &node, const std::shared_ptr<ControlGroup> &controlGroup)
     : ControlGroupRosTimedAction(node,
-                                 std::move(controlGroup),
+                                 controlGroup,
                                  "Encoder Publisher",
                                  ros::Rate{ENCODER_PUBLISHING_RATE_HZ}),
       publisher{node.advertise<std_msgs::Float64>(controlGroup->getName() + "/encoder", ENCODER_PUBLISHING_BUFFER_SIZE)} {}

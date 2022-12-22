@@ -12,7 +12,7 @@ using RosHandlerCore::ControlGroupRosSubscribedAction;
 
 class PowerSubscribedAction : ControlGroupRosSubscribedAction<std_msgs::Float64> {
 public:
-    PowerSubscribedAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup);
+    PowerSubscribedAction(ros::NodeHandle &node, const std::shared_ptr<ControlGroup> &controlGroup);
 
 private:
     void onMessageReceived(const std_msgs::Float64::ConstPtr &msg) override;

@@ -9,9 +9,9 @@ using RosHandlerCore::ControlGroupRosServiceAction;
 using wrevolution::ZeroPowerBehavior;
 
 ZeroPowerBehaviorServiceAction::ZeroPowerBehaviorServiceAction(ros::NodeHandle &node,
-                                                               std::shared_ptr<ControlGroup> controlGroup)
+                                                               const std::shared_ptr<ControlGroup> &controlGroup)
     : ControlGroupRosServiceAction<ZeroPowerBehavior>{node,
-                                                      std::move(controlGroup),
+                                                      controlGroup,
                                                       "zero_power_behavior",
                                                       ros::Duration{ZERO_POWER_MAX_RESPONSE_DELAY_SECONDS}} {}
 

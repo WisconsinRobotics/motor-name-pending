@@ -12,13 +12,13 @@ using RosHandlerCore::ControlGroupRosTimedAction;
 
 class EncoderTimedAction : public ControlGroupRosTimedAction {
 public:
-    EncoderTimedAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup);
+    EncoderTimedAction(ros::NodeHandle &node, const std::shared_ptr<ControlGroup> &controlGroup);
 
 private:
     void onTimerEvent(const ros::TimerEvent &event) override;
 
     const ros::Publisher publisher;
-    static constexpr double ENCODER_PUBLISHING_RATE_HZ{100};
+    static constexpr double ENCODER_PUBLISHING_RATE_HZ{50};
     static constexpr uint32_t ENCODER_PUBLISHING_BUFFER_SIZE{1};
 };
 

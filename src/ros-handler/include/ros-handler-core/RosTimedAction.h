@@ -9,7 +9,7 @@ namespace RosHandler::RosHandlerCore {
 
 class RosTimedAction {
 public:
-    RosTimedAction(const ros::Rate &rate, const ros::NodeHandle &node, std::string_view actionName);
+    RosTimedAction(const ros::Rate &rate, const ros::NodeHandle &node, std::string actionName);
 
     virtual ~RosTimedAction() = default;
     RosTimedAction(const RosTimedAction &) = delete;
@@ -19,13 +19,13 @@ public:
 
 private:
     void timerCallback(const ros::TimerEvent &event);
-    virtual void onTimerEvent(const ros::TimerEvent &event);
+    virtual void onTimerEvent(const ros::TimerEvent &event) = 0;
 
-    static constexpr double TIMER_TOLERANCE_RATIO{0.1}; // Alert on timers more than 10% out of tol.
+    static constexpr double TIMER_TOLERANCE_RATIO{0.5}; // Alert on timers more than 10% out of tol.
 
     const ros::Timer timer;
     const ros::Rate expectedRate;
-    const std::string_view actionName;
+    const std::string actionName;
 };
 
 } // namespace RosHandler::RosHandlerCore

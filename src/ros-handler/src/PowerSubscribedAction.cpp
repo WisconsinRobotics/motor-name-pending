@@ -2,9 +2,9 @@
 
 namespace RosHandler {
 
-PowerSubscribedAction::PowerSubscribedAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup)
+PowerSubscribedAction::PowerSubscribedAction(ros::NodeHandle &node, const std::shared_ptr<ControlGroup> &controlGroup)
     : ControlGroupRosSubscribedAction<std_msgs::Float64>{node,
-                                                         std::move(controlGroup),
+                                                         controlGroup,
                                                          "power",
                                                          ros::Duration{POWER_MAX_RESPONSE_DELAY_SECONDS},
                                                          POWER_SUBSCRIBER_QUEUE_SIZE} {}

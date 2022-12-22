@@ -14,12 +14,12 @@ class ControlGroupRosSubscribedAction : public RosSubscribedAction<T> {
 public:
     ControlGroupRosSubscribedAction(
         ros::NodeHandle &node,
-        std::shared_ptr<ControlGroup> controlGroup,
+        const std::shared_ptr<ControlGroup> &controlGroup,
         const std::string &subscriptionName,
         const ros::Duration &maxResponseTime,
         uint32_t queueSize)
         : RosSubscribedAction<T>{node, controlGroup->getName() + "/" + subscriptionName, queueSize, maxResponseTime},
-          controlGroup{std::move(controlGroup)} {}
+          controlGroup{controlGroup} {}
 
 protected:
     const std::shared_ptr<ControlGroup> controlGroup;

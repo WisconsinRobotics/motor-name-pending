@@ -11,7 +11,7 @@ using RosHandlerCore::ControlGroupRosServiceAction;
 
 class ZeroPowerBehaviorServiceAction : public ControlGroupRosServiceAction<wrevolution::ZeroPowerBehavior> {
 public:
-    ZeroPowerBehaviorServiceAction(ros::NodeHandle &node, std::shared_ptr<ControlGroup> controlGroup);
+    ZeroPowerBehaviorServiceAction(ros::NodeHandle &node, const std::shared_ptr<ControlGroup> &controlGroup);
 
 private:
     auto onServiceRequest(const wrevolution::ZeroPowerBehavior::Request &req, wrevolution::ZeroPowerBehavior::Response &resp) -> bool override;

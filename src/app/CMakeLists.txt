@@ -1,7 +1,2 @@
-add_executable(TalonFX_test)
-
-target_sources(TalonFX_test PRIVATE test.cpp)
-
-target_link_libraries(TalonFX_test PRIVATE hardware)
-
-MakeTalonTarget(TalonFX_test)
+add_subdirectory(RawTalonTest)
+add_subdirectory(RosControlTest)

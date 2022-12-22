@@ -13,7 +13,7 @@ class ControlGroupRosTimedAction : public RosTimedAction {
 public:
     ControlGroupRosTimedAction(
         const ros::NodeHandle &node,
-        std::shared_ptr<ControlGroup> controlGroup,
+        const std::shared_ptr<ControlGroup> &controlGroup,
         const std::string &actionDescription,
         const ros::Rate &rate);
 

@@ -3,6 +3,7 @@
 
 #include "RosConcepts.h" // IWYU pragma: keep; Concept defintion
 #include "ros/node_handle.h"
+#include <iostream>
 
 namespace RosHandler::RosHandlerCore {
 
@@ -21,11 +22,7 @@ public:
 
 private:
     void subscriberCallback(const ros::MessageEvent<T const> &event) {
-        const auto responseDelay = ros::Time::now() - event.getReceiptTime();
-        if (responseDelay > maxResponseTime) {
-            ROS_WARN_STREAM(
-                "Response on topic '" << server.getTopic() << "' is taking longer than expected: Exp: " << maxResponseTime << " Act: " << responseDelay);
-        }
+        std::cout << "Heard something!" << std::endl;
         onMessageReceived(event.getConstMessage());
     }
 

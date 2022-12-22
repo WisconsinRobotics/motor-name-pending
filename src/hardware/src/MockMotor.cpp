@@ -2,6 +2,8 @@
 #include <chrono>
 #include <mutex>
 
+#include <iostream>
+
 namespace Hardware {
 
 MockMotor::MockMotor(std::string_view name)
