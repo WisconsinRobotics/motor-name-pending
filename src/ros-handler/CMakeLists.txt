@@ -7,6 +7,7 @@ target_sources(ros-handler
     src/EncoderTimedAction.cpp
     src/ZeroPowerBehaviorServiceAction.cpp
     src/PowerSubscribedAction.cpp
+    src/ControlGroupRosHandler.cpp
 )
 
 target_link_libraries(ros-handler PRIVATE hardware)

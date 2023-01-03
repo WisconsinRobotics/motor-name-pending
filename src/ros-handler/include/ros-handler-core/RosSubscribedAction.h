@@ -3,7 +3,6 @@
 
 #include "RosConcepts.h" // IWYU pragma: keep; Concept defintion
 #include "ros/node_handle.h"
-#include <iostream>
 
 namespace RosHandler::RosHandlerCore {
 
@@ -22,7 +21,6 @@ public:
 
 private:
     void subscriberCallback(const ros::MessageEvent<T const> &event) {
-        std::cout << "Heard something!" << std::endl;
         onMessageReceived(event.getConstMessage());
     }
 

@@ -13,7 +13,7 @@ using ctre::phoenix::motorcontrol::can::TalonFX;
 namespace Hardware {
 class Motor : public ControlGroup {
 public:
-    explicit Motor(uint8_t motorID);
+    explicit Motor(uint8_t motorID, std::string friendlyName);
     void setPower(double power) override;
     auto getEncoder() const -> std::optional<double> override;
     void setReversal(bool inverted) override;
@@ -28,6 +28,7 @@ private:
     uint8_t deviceID;
     static constexpr int8_t PRIMARY_CLOSED_LOOP_PID{0};
     static constexpr int32_t ENCODER_RESET_TIMEOUT_MILLISECONDS{100};
+    std::string friendlyName;
 };
 } // namespace Hardware
 

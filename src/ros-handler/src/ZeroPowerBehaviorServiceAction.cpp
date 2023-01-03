@@ -17,7 +17,6 @@ ZeroPowerBehaviorServiceAction::ZeroPowerBehaviorServiceAction(ros::NodeHandle &
 
 auto ZeroPowerBehaviorServiceAction::onServiceRequest(const ZeroPowerBehavior::Request &req,
                                                       ZeroPowerBehavior::Response &resp) -> bool {
-    resp.success = 0U;
     switch (req.behavior) {
     case ZeroPowerBehavior::Request::ZERO_POWER_BEHAVIOR_BRAKE:
         controlGroup->setZeroPowerBehavior(Hardware::ZeroPowerBehavior::BRAKE);
@@ -28,7 +27,6 @@ auto ZeroPowerBehaviorServiceAction::onServiceRequest(const ZeroPowerBehavior::R
     default:
         return false;
     }
-    resp.success = 1U; // Not explicit bool due to how ROS autogenerates bool msgs
     return true;
 }
 

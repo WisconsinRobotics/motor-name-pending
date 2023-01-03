@@ -25,7 +25,7 @@ private:
 
     mutable std::mutex mutex;
     const std::string_view name;
-    mutable int32_t encoder{0};
+    mutable double encoder{0};
     const int32_t ENC_PER_SECOND_MAX_SPEED{200};
     int32_t speed{0};
     int32_t inversion{1};

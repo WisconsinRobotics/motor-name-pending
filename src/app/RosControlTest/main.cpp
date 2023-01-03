@@ -1,12 +1,11 @@
 #include "ControlGroup.h"
-#include "EncoderTimedAction.h"
+#include "ControlGroupRosHandler.h"
 #include "Group.h"
 #include "MockMotor.h"
-#include "PowerSubscribedAction.h"
-#include "ZeroPowerBehaviorServiceAction.h"
 #include "ros/node_handle.h"
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <vector>
 
 auto main(int32_t argc, char **argv) -> int32_t {
@@ -35,18 +34,12 @@ auto main(int32_t argc, char **argv) -> int32_t {
     ros::init(argc, argv, "RosControlTest");
     ros::NodeHandle node{};
 
-    std::vector<std::unique_ptr<RosHandler::EncoderTimedAction>> encoderActions{};
-    std::vector<std::unique_ptr<RosHandler::PowerSubscribedAction>> powerActions{};
-    std::vector<std::unique_ptr<RosHandler::ZeroPowerBehaviorServiceAction>> zeroPowerServiceActions{};
+    std::vector<std::unique_ptr<RosHandler::ControlGroupRosHandler>> controlGroupHandlers{};
 
-    encoderActions.reserve(testingGroups.size());
-    powerActions.reserve(testingGroups.size());
-    zeroPowerServiceActions.reserve(testingGroups.size());
+    controlGroupHandlers.reserve(testingGroups.size());
 
     for (const auto &controlGroup : testingGroups) {
-        encoderActions.push_back(std::make_unique<RosHandler::EncoderTimedAction>(node, controlGroup));
-        powerActions.push_back(std::make_unique<RosHandler::PowerSubscribedAction>(node, controlGroup));
-        zeroPowerServiceActions.push_back(std::make_unique<RosHandler::ZeroPowerBehaviorServiceAction>(node, controlGroup));
+        controlGroupHandlers.push_back(std::make_unique<RosHandler::ControlGroupRosHandler>(controlGroup, node));
     }
 
     std::cout << "ROS Setup complete!" << std::endl;

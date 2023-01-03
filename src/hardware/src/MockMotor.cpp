@@ -59,7 +59,7 @@ void MockMotor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
 void MockMotor::updateEncoder() const {
     const auto currentCalculationTime = std::chrono::steady_clock::now();
     const auto deltaTime = std::chrono::duration_cast<std::chrono::duration<double>>(currentCalculationTime - lastEncoderCalculation);
-    const auto encoderDelta = static_cast<int32_t>(speed * deltaTime.count());
+    const auto encoderDelta = speed * deltaTime.count();
     encoder += encoderDelta;
     lastEncoderCalculation = currentCalculationTime;
 }
