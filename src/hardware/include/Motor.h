@@ -28,7 +28,7 @@ private:
     uint8_t deviceID;
     static constexpr int8_t PRIMARY_CLOSED_LOOP_PID{0};
     static constexpr int32_t ENCODER_RESET_TIMEOUT_MILLISECONDS{100};
-    std::string friendlyName;
+    const std::string friendlyName;
 };
 } // namespace Hardware
 

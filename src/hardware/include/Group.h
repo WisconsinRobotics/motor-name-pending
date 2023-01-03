@@ -29,7 +29,7 @@ private:
     std::shared_ptr<ControlGroup> encoderRead;
     std::string name;
     std::vector<std::shared_ptr<ControlGroup>> members;
-    mutable std::mutex mutex;
+    mutable std::mutex mutex; // TODO: Mutexes in other motor objects cause an opportunity for deadlock; consistent ordering guarantee needed on Group operations
 };
 } // namespace Hardware
 
