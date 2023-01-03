@@ -8,6 +8,8 @@ target_sources(ros-handler
     src/ZeroPowerBehaviorServiceAction.cpp
     src/PowerSubscribedAction.cpp
     src/ControlGroupRosHandler.cpp
+    src/ResetSettingsServiceAction.cpp
+    src/ReverseServiceAction.cpp
 )
 
 target_link_libraries(ros-handler PRIVATE hardware)

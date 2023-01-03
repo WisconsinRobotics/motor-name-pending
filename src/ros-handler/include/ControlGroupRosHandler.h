@@ -4,6 +4,8 @@
 #include "ControlGroup.h"
 #include "EncoderTimedAction.h"
 #include "PowerSubscribedAction.h"
+#include "ResetSettingsServiceAction.h"
+#include "ReverseServiceAction.h"
 #include "ZeroPowerBehaviorServiceAction.h"
 #include "ros/node_handle.h"
 #include <memory>
@@ -12,12 +14,14 @@ namespace RosHandler {
 
 class ControlGroupRosHandler {
 public:
-    ControlGroupRosHandler(const std::shared_ptr<Hardware::ControlGroup> &controlGroup, ros::NodeHandle &node);
+    ControlGroupRosHandler(ros::NodeHandle &node, const std::shared_ptr<Hardware::ControlGroup> &controlGroup);
 
 private:
     const std::unique_ptr<EncoderTimedAction> encoderAction;
     const std::unique_ptr<PowerSubscribedAction> powerAction;
     const std::unique_ptr<ZeroPowerBehaviorServiceAction> zeroPowerBehaviorAction;
+    const std::unique_ptr<ResetSettingsServiceAction> resetSettingsAction;
+    const std::unique_ptr<ReverseServiceAction> reverseAction;
 };
 
 } // namespace RosHandler

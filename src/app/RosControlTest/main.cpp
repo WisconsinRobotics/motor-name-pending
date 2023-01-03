@@ -39,7 +39,7 @@ auto main(int32_t argc, char **argv) -> int32_t {
     controlGroupHandlers.reserve(testingGroups.size());
 
     for (const auto &controlGroup : testingGroups) {
-        controlGroupHandlers.push_back(std::make_unique<RosHandler::ControlGroupRosHandler>(controlGroup, node));
+        controlGroupHandlers.push_back(std::make_unique<RosHandler::ControlGroupRosHandler>(node, controlGroup));
     }
 
     std::cout << "ROS Setup complete!" << std::endl;
