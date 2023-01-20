@@ -1,0 +1,26 @@
+physicalMotors:
+  frontLeft:
+    mock: true # replace with ID: # for a real motor
+    visible: true
+  frontRight:
+    mock: true
+  backLeft:
+    mock: true
+  backRight:
+    mock: true
+controlGroups:
+  all:
+    containedGroups:
+      - left
+      - right
+    visible: true
+  left:
+    containedGroups:
+      - frontLeft
+      - backLeft
+    visible: true
+  right:
+    containedGroups:
+      - frontRight
+      - backRight
+    visible: false

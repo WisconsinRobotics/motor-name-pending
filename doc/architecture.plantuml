@@ -178,4 +178,14 @@ package "ROS Handler"{
 
     note right of ControlGroupRosHandler : Acts as factory and reference-holder \nfor all things you could do with a \nControlGroup over ROS
 }
+
+package "Config Parsing"{
+    class RosHandlerFactory{
+        + getRosHandlers() : vector<unique_ptr<ControlGroupRosHandler>>
+        + RosHandlerFactory(const XmlRpc::XmlRpcValue&) : RosHandlerFactory
+    }
+
+    ControlGroupRosHandler <-- RosHandlerFactory : constructs
+    ControlGroup <-- RosHandlerFactory : constructs
+}
 @enduml
