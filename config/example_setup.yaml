@@ -9,7 +9,7 @@ motorConfiguration:
       mock: true
     backRight:
       mock: true
-  controlGroups:
+  compositeGroups:
     all:
       containedGroups:
         - left
