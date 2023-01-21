@@ -2,7 +2,7 @@ add_library(config-parsing)
 
 target_sources(config-parsing
     PRIVATE
-    src/dummy.cpp
+    src/RosHandlerFactory.cpp
 )
 
 target_include_directories(config-parsing PUBLIC include)
