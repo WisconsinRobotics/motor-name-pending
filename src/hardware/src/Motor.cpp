@@ -13,9 +13,10 @@ namespace Hardware {
 using ctre::phoenix::motorcontrol::ControlMode;
 using ctre::phoenix::motorcontrol::NeutralMode;
 
-Motor::Motor(uint8_t motorID)
+Motor::Motor(uint8_t motorID, std::string friendlyName)
     : motor{std::make_unique<TalonFX>(motorID)},
-      deviceID{motorID} {}
+      deviceID{motorID},
+      friendlyName{std::move(friendlyName)} {}
 
 void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
@@ -24,7 +25,7 @@ void Motor::setPower(double power) {
 
 auto Motor::getName() const -> std::string {
     const std::lock_guard lock{mutex};
-    return to_string(deviceID);
+    return friendlyName;
 }
 
 auto Motor::getEncoder() const -> std::optional<double> {
@@ -52,7 +53,7 @@ void Motor::setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) {
     }
 }
 
-void Motor::resetSettings() const {
+void Motor::resetSettings() {
     const std::lock_guard lock{mutex};
     motor->SetInverted(false);
     motor->SetSensorPhase(false);

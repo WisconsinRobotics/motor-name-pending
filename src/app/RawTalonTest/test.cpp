@@ -30,8 +30,8 @@ auto main() -> int32_t {
     std::cout << "Starting motor" << std::endl;
     ctre::phoenix::unmanaged::FeedEnable(FEED_ENABLE_TIMEOUT_MILLISECONDS);
 
-    std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(MOTOR_1_ID);
-    std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID);
+    std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(MOTOR_1_ID, "MOTOR1");
+    std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID, "MOTOR2");
     Group testGroup1{"testGroup1"};
 
     testGroup1.addControlGroup(testMotor1);

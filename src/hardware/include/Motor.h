@@ -9,17 +9,18 @@
 #include <stdexcept>
 
 using ctre::phoenix::motorcontrol::can::TalonFX;
+
 namespace Hardware {
 class Motor : public ControlGroup {
 public:
-    explicit Motor(uint8_t motorID);
+    explicit Motor(uint8_t motorID, std::string friendlyName);
     void setPower(double power) override;
     auto getEncoder() const -> std::optional<double> override;
     void setReversal(bool inverted) override;
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;
     auto getName() const -> std::string override;
     auto getMembers() const -> std::string override;
-    void resetSettings() const override;
+    void resetSettings() override;
 
 private:
     mutable std::mutex mutex;
@@ -27,6 +28,7 @@ private:
     uint8_t deviceID;
     static constexpr int8_t PRIMARY_CLOSED_LOOP_PID{0};
     static constexpr int32_t ENCODER_RESET_TIMEOUT_MILLISECONDS{100};
+    const std::string friendlyName;
 };
 } // namespace Hardware
 

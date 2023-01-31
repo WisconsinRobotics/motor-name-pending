@@ -22,7 +22,7 @@ void Group::addControlGroup(const std::shared_ptr<ControlGroup> &controlGroup) {
     members.push_back(controlGroup);
 }
 
-void Group::removeControlGroup(ControlGroup &controlGroup) {
+void Group::removeControlGroup(const ControlGroup &controlGroup) {
     const std::lock_guard lock{mutex};
     for (int i = 0; i < this->members.size(); i++) {
         std::shared_ptr<ControlGroup> member = this->members.at(i);
@@ -86,7 +86,7 @@ auto Group::getEncoder() const -> std::optional<double> {
     return encoderRead->getEncoder();
 }
 
-void Group::resetSettings() const {
+void Group::resetSettings() {
     const std::lock_guard lock{mutex};
     for (const auto &member : members) {
         member->resetSettings();

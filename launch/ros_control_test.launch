@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE launch SYSTEM "https://gist.githubusercontent.com/nalt/dfa2abc9d2e3ae4feb82ca5608090387/raw/roslaunch.dtd">
+<launch>
+    <node pkg="wrevolution" type="RosControlTest" name="RosControlTests" output="screen" />
+</launch>
