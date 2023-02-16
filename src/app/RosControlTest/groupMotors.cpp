@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 
-auto groupMotors(int32_t argc, char **argv) -> int32_t {
+auto main(int32_t argc, char **argv) -> int32_t {
     std::cout << "wrevolution ROS test start..." << std::endl;
 
     // motors 1 - 3
