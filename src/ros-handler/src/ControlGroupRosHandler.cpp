@@ -4,6 +4,7 @@
 #include "PowerSubscribedAction.h"
 #include "ResetSettingsServiceAction.h"
 #include "ReverseServiceAction.h"
+#include "WatchdogTimedSubscribedAction.h"
 #include "ZeroPowerBehaviorServiceAction.h"
 #include <memory>
 
@@ -14,6 +15,7 @@ ControlGroupRosHandler::ControlGroupRosHandler(ros::NodeHandle &node, const std:
       powerAction{std::make_unique<PowerSubscribedAction>(node, controlGroup)},
       zeroPowerBehaviorAction{std::make_unique<ZeroPowerBehaviorServiceAction>(node, controlGroup)},
       resetSettingsAction{std::make_unique<ResetSettingsServiceAction>(node, controlGroup)},
-      reverseAction{std::make_unique<ReverseServiceAction>(node, controlGroup)} {}
+      reverseAction{std::make_unique<ReverseServiceAction>(node, controlGroup)},
+      watchdogAction{std::make_unique<WatchdogTimedSubscriberAction>(node, controlGroup)} {}
 
 } // namespace RosHandler

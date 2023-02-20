@@ -6,6 +6,7 @@
 #include "PowerSubscribedAction.h"
 #include "ResetSettingsServiceAction.h"
 #include "ReverseServiceAction.h"
+#include "WatchdogTimedSubscribedAction.h"
 #include "ZeroPowerBehaviorServiceAction.h"
 #include "ros/node_handle.h"
 #include <memory>
@@ -22,6 +23,7 @@ private:
     const std::unique_ptr<ZeroPowerBehaviorServiceAction> zeroPowerBehaviorAction;
     const std::unique_ptr<ResetSettingsServiceAction> resetSettingsAction;
     const std::unique_ptr<ReverseServiceAction> reverseAction;
+    const std::unique_ptr<WatchdogTimedSubscriberAction> watchdogAction;
 };
 
 } // namespace RosHandler

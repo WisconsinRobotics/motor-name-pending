@@ -10,6 +10,7 @@ target_sources(ros-handler
     src/ControlGroupRosHandler.cpp
     src/ResetSettingsServiceAction.cpp
     src/ReverseServiceAction.cpp
+    src/WatchdogTimedSubscribedAction.cpp
 )
 
 target_link_libraries(ros-handler PRIVATE hardware)
