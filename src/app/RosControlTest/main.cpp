@@ -1,32 +1,42 @@
 #include "ControlGroup.h"
 #include "ControlGroupRosHandler.h"
 #include "Group.h"
-#include "MockMotor.h"
+#include "Motor.h"
 #include "ros/node_handle.h"
 #include <cstdint>
 #include <iostream>
 #include <memory>
 #include <vector>
 
+
+#include "ctre/phoenix/platform/Platform.h"
+#include "ctre/phoenix/unmanaged/Unmanaged.h"
+
 auto main(int32_t argc, char **argv) -> int32_t {
+
+    ctre::phoenix::platform::can::SetCANInterface("can0");
+
     std::cout << "wrevolution ROS test start..." << std::endl;
 
     // Simple motor setup
-    auto motor1{std::make_shared<Hardware::MockMotor>("MOTOR_1")};
-    auto motor2{std::make_shared<Hardware::MockMotor>("MOTOR_2")};
+    auto motor1{std::make_shared<Hardware::Motor>(1, "frontLeft")};
+    auto motor2{std::make_shared<Hardware::Motor>(2, "midLeft")};
+    auto motor3{std::make_shared<Hardware::Motor>(3, "backLeft")};
 
-    // Complex motor setup
-    auto motor3{std::make_shared<Hardware::MockMotor>("MOTOR_3")};
-    auto motor4{std::make_shared<Hardware::MockMotor>("MOTOR_4")};
+    auto motor4{std::make_shared<Hardware::Motor>(4, "frontRight")};
+    auto motor5{std::make_shared<Hardware::Motor>(5, "midRight")};
+    auto motor6{std::make_shared<Hardware::Motor>(6, "backRight")};
 
-    auto motorGroup{std::make_shared<Hardware::Group>("MOCK_GROUP")};
-    motorGroup->addControlGroup(motor3);
-    motorGroup->addControlGroup(motor4);
+    auto leftGroup{std::make_shared<Hardware::Group>("left")};
+    auto rightGroup{std::make_shared<Hardware::Group>("right")};
 
-    const std::vector<std::shared_ptr<Hardware::ControlGroup>> testingGroups{
-        motor1,
-        motor2,
-        motorGroup};
+    leftGroup->addControlGroup(motor1);
+    leftGroup->addControlGroup(motor2);
+    leftGroup->addControlGroup(motor3);
+
+    rightGroup->addControlGroup(motor4);
+    rightGroup->addControlGroup(motor5);
+    rightGroup->addControlGroup(motor6);
 
     std::cout << "Motor setup complete!" << std::endl;
 
@@ -34,13 +44,11 @@ auto main(int32_t argc, char **argv) -> int32_t {
     ros::init(argc, argv, "RosControlTest");
     ros::NodeHandle node{};
 
-    std::vector<std::unique_ptr<RosHandler::ControlGroupRosHandler>> controlGroupHandlers{};
+    // auto timer = node.createTimer(ros::Duration{0.01}, [](const ros::TimerEvent& event)->void {
+    // });
 
-    controlGroupHandlers.reserve(testingGroups.size());
-
-    for (const auto &controlGroup : testingGroups) {
-        controlGroupHandlers.push_back(std::make_unique<RosHandler::ControlGroupRosHandler>(node, controlGroup));
-    }
+    auto leftHandler{std::make_unique<RosHandler::ControlGroupRosHandler>(node, leftGroup)};
+    auto rightHandler{std::make_unique<RosHandler::ControlGroupRosHandler>(node, rightGroup)};
 
     std::cout << "ROS Setup complete!" << std::endl;
 

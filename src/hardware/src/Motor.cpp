@@ -2,7 +2,9 @@
 #include "Motor.h"
 #include "ctre/phoenix/motorcontrol/NeutralMode.h"
 #include "ctre/phoenix/motorcontrol/can/TalonFX.h"
+#include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include <optional>
+#include <iostream>
 
 #include <memory>
 
@@ -20,6 +22,7 @@ Motor::Motor(uint8_t motorID, std::string friendlyName)
 
 void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
+    ctre::phoenix::unmanaged::FeedEnable(1000);
     motor->Set(ControlMode::PercentOutput, power);
 }
 
