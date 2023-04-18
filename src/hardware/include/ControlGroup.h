@@ -21,6 +21,7 @@ public:
     [[nodiscard]] virtual auto getMembers() const
         -> std::string = 0; // TODO: Is this necessary?
     virtual void resetSettings() = 0;
+    virtual void resetEncoder() = 0;
 
     ControlGroup() = default;
     virtual ~ControlGroup() = default;

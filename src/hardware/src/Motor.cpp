@@ -62,6 +62,12 @@ void Motor::resetSettings() {
     motor->SetNeutralMode(NeutralMode::Brake);
 }
 
+void Motor::resetEncoder() {
+    const std::lock_guard lock{mutex};
+    motor->SetSelectedSensorPosition(0, PRIMARY_CLOSED_LOOP_PID,
+                                     ENCODER_RESET_TIMEOUT_MILLISECONDS);
+}
+
 auto Motor::getMembers() const -> std::string {
     const std::lock_guard lock{mutex};
     return to_string(deviceID) + " is not a Motor Group and has no members!";
