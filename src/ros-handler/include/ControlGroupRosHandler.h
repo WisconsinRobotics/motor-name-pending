@@ -4,6 +4,7 @@
 #include "ControlGroup.h"
 #include "EncoderTimedAction.h"
 #include "PowerSubscribedAction.h"
+#include "ResetEncoderServiceAction.h"
 #include "ResetSettingsServiceAction.h"
 #include "ReverseServiceAction.h"
 #include "ZeroPowerBehaviorServiceAction.h"
@@ -22,6 +23,7 @@ private:
     const std::unique_ptr<ZeroPowerBehaviorServiceAction> zeroPowerBehaviorAction;
     const std::unique_ptr<ResetSettingsServiceAction> resetSettingsAction;
     const std::unique_ptr<ReverseServiceAction> reverseAction;
+    const std::unique_ptr<ResetEncoderServiceAction> resetEncoderAction;
 };
 
 } // namespace RosHandler
