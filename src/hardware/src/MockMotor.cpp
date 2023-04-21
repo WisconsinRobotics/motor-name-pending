@@ -32,6 +32,11 @@ void MockMotor::resetSettings() {
     speed = 0;
 }
 
+void MockMotor::resetEncoder() {
+    std::lock_guard lock{mutex};
+    encoder = 0;
+}
+
 void MockMotor::setPower(double power) {
     std::lock_guard lock{mutex};
     speed = static_cast<int32_t>(inversion * ENC_PER_SECOND_MAX_SPEED * power);

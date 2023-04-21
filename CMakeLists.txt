@@ -61,6 +61,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 add_service_files(
     FILES
     ResetSettings.srv
+    ResetEncoder.srv
     Reverse.srv
     ZeroPowerBehavior.srv
 )

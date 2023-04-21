@@ -92,4 +92,11 @@ void Group::resetSettings() {
         member->resetSettings();
     }
 }
+
+void Group::resetEncoder() {
+    const std::lock_guard lock{mutex};
+    for (const auto &member : members) {
+        member->resetEncoder();
+    }
+}
 } // namespace Hardware

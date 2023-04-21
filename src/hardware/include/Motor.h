@@ -21,6 +21,7 @@ public:
     auto getName() const -> std::string override;
     auto getMembers() const -> std::string override;
     void resetSettings() override;
+    void resetEncoder() override;
 
 private:
     mutable std::mutex mutex;
