@@ -20,10 +20,15 @@ Motor::Motor(uint8_t motorID, std::string friendlyName)
     : motor{std::make_unique<TalonFX>(motorID)},
       deviceID{motorID},
       friendlyName{std::move(friendlyName)} {
-        ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration config{};
-        motor->ConfigGetStatorCurrentLimit(config);
-        config.enable = false;
-        motor->ConfigStatorCurrentLimit(config);
+        ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration stator_config{};
+        motor->ConfigGetStatorCurrentLimit(stator_config);
+        stator_config.enable = false;
+        motor->ConfigStatorCurrentLimit(stator_config);
+
+        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration supply_config{};
+        motor->ConfigGetSupplyCurrentLimit(supply_config);
+        supply_config.enable = false;
+        motor->ConfigSupplyCurrentLimit(supply_config);
       }
 
 void Motor::setPower(double power) {
