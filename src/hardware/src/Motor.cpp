@@ -1,3 +1,4 @@
+#include "ctre/phoenix/ErrorCode.h"
 #include "ctre/phoenix/motorcontrol/StatorCurrentLimitConfiguration.h"
 #define Phoenix_No_WPI
 #include "Motor.h"
@@ -6,6 +7,7 @@
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include <optional>
 #include <iostream>
+#include "ros/ros.h"
 
 #include <memory>
 
@@ -35,6 +37,10 @@ void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
     ctre::phoenix::unmanaged::FeedEnable(1000);
     motor->Set(ControlMode::PercentOutput, power);
+    const auto err{motor->GetLastError()};
+    using std::string_literals::operator""s;
+    if(err != ctre::phoenix::ErrorCode::OK)
+        ROS_ERROR_STREAM("motor "s << friendlyName << " has issue " << err);
 }
 
 auto Motor::getName() const -> std::string {
