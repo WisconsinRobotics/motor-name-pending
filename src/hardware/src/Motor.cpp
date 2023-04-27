@@ -41,9 +41,9 @@ void Motor::setPower(double power) {
     const auto err{motor->GetLastError()};
     using std::string_literals::operator""s;
 
-    ROS_INFO_STREAM("motor "s << friendlyName << " voltage " << motor->GetBusVoltage() << "V");
-    if(err != ctre::phoenix::ErrorCode::OK)
-        ROS_ERROR_STREAM("motor "s << friendlyName << " has issue " << err);
+    if (motor->GetBusVoltage() < 11.5) {
+        ROS_ERROR_STREAM("motor "s << friendlyName << " voltage " << motor->GetBusVoltage() << "V. Recharge battery. ");
+    }
 }
 
 auto Motor::getName() const -> std::string {
