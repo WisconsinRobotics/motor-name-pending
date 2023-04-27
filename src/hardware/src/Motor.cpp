@@ -1,3 +1,4 @@
+#include "ctre/phoenix/motorcontrol/StatorCurrentLimitConfiguration.h"
 #define Phoenix_No_WPI
 #include "Motor.h"
 #include "ctre/phoenix/motorcontrol/NeutralMode.h"
@@ -18,7 +19,12 @@ using ctre::phoenix::motorcontrol::NeutralMode;
 Motor::Motor(uint8_t motorID, std::string friendlyName)
     : motor{std::make_unique<TalonFX>(motorID)},
       deviceID{motorID},
-      friendlyName{std::move(friendlyName)} {}
+      friendlyName{std::move(friendlyName)} {
+        ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration config{};
+        motor->ConfigGetStatorCurrentLimit(config);
+        config.enable = false;
+        motor->ConfigStatorCurrentLimit(config);
+      }
 
 void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
