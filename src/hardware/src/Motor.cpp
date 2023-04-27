@@ -40,9 +40,10 @@ void Motor::setPower(double power) {
     motor->Set(ControlMode::PercentOutput, power);
     const auto err{motor->GetLastError()};
     using std::string_literals::operator""s;
+    const auto voltage{motor->GetBusVoltage()};
 
-    if (motor->GetBusVoltage() < 11.5) {
-        ROS_ERROR_STREAM("motor "s << friendlyName << " voltage " << motor->GetBusVoltage() << "V. Recharge battery. ");
+    if (voltage < 11.5) {
+        ROS_ERROR_STREAM("motor "s << friendlyName << " voltage " << voltage << "V. Recharge battery. ");
     }
 }
 
