@@ -1,4 +1,5 @@
 #include "ctre/phoenix/ErrorCode.h"
+#include "ctre/phoenix/Utilities.h"
 #include "ctre/phoenix/motorcontrol/StatorCurrentLimitConfiguration.h"
 #define Phoenix_No_WPI
 #include "Motor.h"
@@ -39,6 +40,8 @@ void Motor::setPower(double power) {
     motor->Set(ControlMode::PercentOutput, power);
     const auto err{motor->GetLastError()};
     using std::string_literals::operator""s;
+
+    ROS_INFO_STREAM("motor "s << friendlyName << " voltage " << motor->GetBusVoltage() << "V");
     if(err != ctre::phoenix::ErrorCode::OK)
         ROS_ERROR_STREAM("motor "s << friendlyName << " has issue " << err);
 }
