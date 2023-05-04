@@ -36,7 +36,7 @@ Motor::Motor(uint8_t motorID, std::string friendlyName)
 
 void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
-    ctre::phoenix::unmanaged::FeedEnable(1000);
+    ctre::phoenix::unmanaged::FeedEnable(5000);
     motor->Set(ControlMode::PercentOutput, power);
     const auto err{motor->GetLastError()};
     using std::string_literals::operator""s;
