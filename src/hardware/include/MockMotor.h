@@ -16,6 +16,7 @@ public:
     [[nodiscard]] auto getMembers() const -> std::string override;
     [[nodiscard]] auto getName() const -> std::string override;
     void resetSettings() override;
+    void resetEncoder() override;
     void setPower(double power) override;
     void setReversal(bool inverted) override;
     void setZeroPowerBehavior(ZeroPowerBehavior inputBehavior) override;

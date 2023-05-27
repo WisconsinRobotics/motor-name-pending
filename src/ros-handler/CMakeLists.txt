@@ -9,6 +9,7 @@ target_sources(ros-handler
     src/PowerSubscribedAction.cpp
     src/ControlGroupRosHandler.cpp
     src/ResetSettingsServiceAction.cpp
+    src/ResetEncoderServiceAction.cpp
     src/ReverseServiceAction.cpp
 )
 
