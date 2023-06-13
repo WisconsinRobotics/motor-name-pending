@@ -42,6 +42,7 @@ void Motor::setPower(double power) {
     using std::string_literals::operator""s;
     const auto voltage{motor->GetBusVoltage()};
 
+    // TODO (@bennowotny ): Avoid magic constant
     if (voltage < 8) {
     	ROS_ERROR_STREAM("motor "s << friendlyName << " voltage " << voltage << "V. Recharge battery. ");
     }
