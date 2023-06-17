@@ -1,8 +1,14 @@
+#include "ctre/phoenix/ErrorCode.h"
+#include "ctre/phoenix/Utilities.h"
+#include "ctre/phoenix/motorcontrol/StatorCurrentLimitConfiguration.h"
 #define Phoenix_No_WPI
 #include "Motor.h"
 #include "ctre/phoenix/motorcontrol/NeutralMode.h"
 #include "ctre/phoenix/motorcontrol/can/TalonFX.h"
+#include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include <optional>
+#include <iostream>
+#include "ros/ros.h"
 
 #include <memory>
 
@@ -16,11 +22,30 @@ using ctre::phoenix::motorcontrol::NeutralMode;
 Motor::Motor(uint8_t motorID, std::string friendlyName)
     : motor{std::make_unique<TalonFX>(motorID)},
       deviceID{motorID},
-      friendlyName{std::move(friendlyName)} {}
+      friendlyName{std::move(friendlyName)} {
+        ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration stator_config{};
+        motor->ConfigGetStatorCurrentLimit(stator_config);
+        stator_config.enable = false;
+        motor->ConfigStatorCurrentLimit(stator_config);
+
+        ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration supply_config{};
+        motor->ConfigGetSupplyCurrentLimit(supply_config);
+        supply_config.enable = false;
+        motor->ConfigSupplyCurrentLimit(supply_config);
+      }
 
 void Motor::setPower(double power) {
     const std::lock_guard lock{mutex};
+    ctre::phoenix::unmanaged::FeedEnable(5000);
     motor->Set(ControlMode::PercentOutput, power);
+    const auto err{motor->GetLastError()};
+    using std::string_literals::operator""s;
+    const auto voltage{motor->GetBusVoltage()};
+
+    // TODO (@bennowotny ): Avoid magic constant
+    if (voltage < 8) {
+    	ROS_ERROR_STREAM("motor "s << friendlyName << " voltage " << voltage << "V. Recharge battery. ");
+    }
 }
 
 auto Motor::getName() const -> std::string {

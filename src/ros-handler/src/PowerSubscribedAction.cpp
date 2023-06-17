@@ -15,7 +15,7 @@ void PowerSubscribedAction::onMessageReceived(const std_msgs::Float64::ConstPtr 
             "Control Group '" << controlGroup->getName() << "' received illegal power " << msg->data);
         return;
     }
-
+    
     controlGroup->setPower(msg->data);
 }
 

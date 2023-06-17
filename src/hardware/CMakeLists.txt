@@ -10,3 +10,5 @@ target_sources(hardware
 target_include_directories(hardware PUBLIC include)
 
 MakeTalonTarget(hardware)
+# TODO (@bennowotny ): hardware should not depend on ROS
+MakeROSTarget(hardware)

@@ -30,12 +30,20 @@ auto main() -> int32_t {
     std::cout << "Starting motor" << std::endl;
     ctre::phoenix::unmanaged::FeedEnable(FEED_ENABLE_TIMEOUT_MILLISECONDS);
 
+    TalonFX mtr{1};
+    // mtr.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0.2);
+
+    // TODO (@Tzanccc): while true loop here to isolate diagnostic program. Should seperate test program from diaognistic server into two applications instead
+    while(true);
     std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(MOTOR_1_ID, "MOTOR1");
     std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID, "MOTOR2");
     Group testGroup1{"testGroup1"};
+    
+    std::cout << "Enable state: " << ctre::phoenix::unmanaged::GetEnableState() << std::endl;
 
+    testMotor1->setPower(0.5);
     testGroup1.addControlGroup(testMotor1);
-    testGroup1.addControlGroup(testMotor2);
+    //testGroup1.addControlGroup(testMotor2);
     testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);
@@ -49,7 +57,7 @@ auto main() -> int32_t {
     testGroup1.setPower(0);
     sleep_for(LONG_WAIT);
 
-    testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
+    //testGroup1.removeControlGroup(testGroup1.getControlGroup("2"));
     testGroup1.resetSettings();
     printControlGroup(testGroup1);
     testGroup1.setPrimaryEncoder(testMotor1);

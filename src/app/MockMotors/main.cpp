@@ -1,32 +1,25 @@
 #include "ControlGroup.h"
 #include "ControlGroupRosHandler.h"
 #include "Group.h"
-#include "Motor.h"
+#include "MockMotor.h"
 #include "ros/node_handle.h"
 #include <cstdint>
 #include <iostream>
 #include <memory>
 #include <vector>
 
-
-#include "ctre/phoenix/platform/Platform.h"
-#include "ctre/phoenix/unmanaged/Unmanaged.h"
-
 auto main(int32_t argc, char **argv) -> int32_t {
-
-    // TODO (@Tzanccc): currently a magic string, consider changing it use command line arguments or some other equivalent
-    ctre::phoenix::platform::can::SetCANInterface("can0");
 
     std::cout << "wrevolution ROS test start..." << std::endl;
 
     // Simple motor setup
-    auto motor1{std::make_shared<Hardware::Motor>(1, "frontLeft")};
-    auto motor2{std::make_shared<Hardware::Motor>(2, "midLeft")};
-    auto motor3{std::make_shared<Hardware::Motor>(3, "backLeft")};
+    auto motor1{std::make_shared<Hardware::MockMotor>("frontLeft")};
+    auto motor2{std::make_shared<Hardware::MockMotor>("midLeft")};
+    auto motor3{std::make_shared<Hardware::MockMotor>("backLeft")};
 
-    auto motor4{std::make_shared<Hardware::Motor>(4, "frontRight")};
-    auto motor5{std::make_shared<Hardware::Motor>(5, "midRight")};
-    auto motor6{std::make_shared<Hardware::Motor>(6, "backRight")};
+    auto motor4{std::make_shared<Hardware::MockMotor>("frontRight")};
+    auto motor5{std::make_shared<Hardware::MockMotor>("midRight")};
+    auto motor6{std::make_shared<Hardware::MockMotor>("backRight")};
 
     auto leftGroup{std::make_shared<Hardware::Group>("left")};
     auto rightGroup{std::make_shared<Hardware::Group>("right")};
