@@ -14,6 +14,7 @@
 
 auto main(int32_t argc, char **argv) -> int32_t {
 
+    // TODO (@Tzanccc): currently a magic string, consider changing it use command line arguments or some other equivalent
     ctre::phoenix::platform::can::SetCANInterface("can0");
 
     std::cout << "wrevolution ROS test start..." << std::endl;

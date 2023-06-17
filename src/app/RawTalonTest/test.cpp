@@ -33,6 +33,7 @@ auto main() -> int32_t {
     TalonFX mtr{1};
     // mtr.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0.2);
 
+    // TODO (@Tzanccc): while true loop here to isolate diagnostic program. Should seperate test program from diaognistic server into two applications instead
     while(true);
     std::shared_ptr<Motor> testMotor1 = std::make_shared<Motor>(MOTOR_1_ID, "MOTOR1");
     std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID, "MOTOR2");
