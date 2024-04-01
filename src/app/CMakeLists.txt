@@ -1,3 +1,4 @@
 add_subdirectory(RawTalonTest)
 add_subdirectory(RosControlTest)
 add_subdirectory(MockMotors)
+add_subdirectory(Pigeon2)
