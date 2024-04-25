@@ -2,6 +2,8 @@
 #include "ControlGroupRosHandler.h"
 #include "Group.h"
 #include "Motor.h"
+#include "PigeonIMU.h"
+#include "PigeonRosHandler.h"
 #include "ros/node_handle.h"
 #include <cstdint>
 #include <iostream>
@@ -40,6 +42,11 @@ auto main(int32_t argc, char **argv) -> int32_t {
     rightGroup->addControlGroup(motor5);
     rightGroup->addControlGroup(motor6);
 
+    leftGroup->setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
+    rightGroup->setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
+
+    auto pigeonIMU{std::make_shared<Hardware::PigeonIMU>(10, "pigeon")};
+
     std::cout << "Motor setup complete!" << std::endl;
 
     // Setup ROS Interface
@@ -51,6 +58,7 @@ auto main(int32_t argc, char **argv) -> int32_t {
 
     auto leftHandler{std::make_unique<RosHandler::ControlGroupRosHandler>(node, leftGroup)};
     auto rightHandler{std::make_unique<RosHandler::ControlGroupRosHandler>(node, rightGroup)};
+    auto pigeonHandler{std::make_shared<RosHandler::PigeonRosHandler>(node, pigeonIMU)};
 
     std::cout << "ROS Setup complete!" << std::endl;
 
