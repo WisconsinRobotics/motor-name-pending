@@ -22,8 +22,9 @@ auto PigeonIMU::getName() const -> std::string{
 
 auto PigeonIMU::getYaw() const -> std::optional<double> {
     const std::lock_guard lock{mutex};
-    return std::make_optional(
-        std::fmod(imu->GetYaw(), 360));
+    double angle = std::fmod(imu->GetYaw(), 360);
+    angle = angle >= 0 ? angle : angle + 360;
+    return std::make_optional(angle);
 }
 
 void PigeonIMU::setYaw(double angleDeg) {
