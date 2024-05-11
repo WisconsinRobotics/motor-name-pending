@@ -16,6 +16,7 @@ public:
     auto getName() const -> std::string;
     [[nodiscard]] auto getYaw() const -> std::optional<double>;
     void setYaw(double angleDeg);
+    [[nodiscard]] auto getAbsoluteCompassHeading() const -> std::optional<double>;
 
 private:
     mutable std::mutex mutex;
