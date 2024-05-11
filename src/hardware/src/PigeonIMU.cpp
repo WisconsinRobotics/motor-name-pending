@@ -13,7 +13,10 @@ namespace Hardware {
 PigeonIMU::PigeonIMU(uint8_t canID, std::string friendlyName) :
     imu(std::make_unique<Pigeon2>(canID)),
     deviceID(canID),
-    friendlyName(std::move(friendlyName)) {}
+    friendlyName(std::move(friendlyName)) {
+      imu->ConfigEnableCompass(true);
+      imu->SetYawToCompass();
+    }
 
 auto PigeonIMU::getName() const -> std::string{
     const std::lock_guard lock{mutex};
@@ -31,10 +34,11 @@ void PigeonIMU::setYaw(double angleDeg) {
     const std::lock_guard lock{mutex};
     imu->SetYaw(angleDeg);
 }
-void PigeonIMU::getAbsoluteCompassHeading(double angleDeg) {
+auto PigeonIMU::getAbsoluteCompassHeading() const -> std::optional<double> {
     const std::lock_guard lock{mutex};
-    return std::make_optional(
-        std::fmod(imu->GetAbsoluteCompassHeading(), 360));
+    double angle = std::fmod(imu->GetAbsoluteCompassHeading(), 360);
+    angle = angle >= 0 ? angle : angle + 360;
+    return std::make_optional(angle);
 }
 
 }

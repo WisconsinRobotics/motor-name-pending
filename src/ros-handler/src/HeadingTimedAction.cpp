@@ -15,8 +15,7 @@ HeadingTimedAction::HeadingTimedAction(ros::NodeHandle &node, const std::shared_
 
 void HeadingTimedAction::onTimerEvent(const ros::TimerEvent &event) {
     std_msgs::Float64 msg;
-    
-    auto compass = pigeon->GetAbsoluteCompassHeading();
+    auto compass = pigeon->getAbsoluteCompassHeading();
     auto yaw = pigeon->getYaw();
     if (yaw.has_value()) {
         msg.data = *yaw;
