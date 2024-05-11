@@ -30,5 +30,10 @@ void PigeonIMU::setYaw(double angleDeg) {
     const std::lock_guard lock{mutex};
     imu->SetYaw(angleDeg);
 }
+void PigeonIMU::getAbsoluteCompassHeading(double angleDeg) {
+    const std::lock_guard lock{mutex};
+    return std::make_optional(
+        std::fmod(imu->GetAbsoluteCompassHeading(), 360));
+}
 
 }
