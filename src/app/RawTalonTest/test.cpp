@@ -74,7 +74,7 @@ auto main() -> int32_t {
 
     testGroup1.clearGroup();
     printControlGroup(testGroup1);
-};
+}
 
 void printControlGroup(const ControlGroup &obj) {
     std::cout << "Motor Name:  " << obj.getName() << std::endl;
