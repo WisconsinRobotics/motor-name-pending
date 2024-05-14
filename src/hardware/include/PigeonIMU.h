@@ -8,6 +8,7 @@
 #include "ctre/phoenix/sensors/Pigeon2.h"
 
 using ctre::phoenix::sensors::Pigeon2;
+using ctre::phoenix::sensors::AxisDirection;
 
 namespace Hardware {
 class PigeonIMU {
@@ -15,6 +16,7 @@ public:
     explicit PigeonIMU(uint8_t canID, std::string friendlyName);
     auto getName() const -> std::string;
     [[nodiscard]] auto getYaw() const -> std::optional<double>;
+    void setOrientation(AxisDirection forward, AxisDirection up);
     void setYaw(double angleDeg);
     void startMagCal();
     void endMagCal(bool saveMagCal);

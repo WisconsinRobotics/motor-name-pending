@@ -14,11 +14,17 @@ namespace Hardware {
 PigeonIMU::PigeonIMU(uint8_t canID, std::string friendlyName) :
     imu{std::make_unique<Pigeon2>(canID)},
     deviceID{canID},
-    friendlyName{std::move(friendlyName)} {}
+    friendlyName{std::move(friendlyName)} {
+
+    }
 
 auto PigeonIMU::getName() const -> std::string{
     const std::lock_guard lock{mutex};
     return friendlyName;
+}
+
+void PigeonIMU::setOrientation(AxisDirection forward, AxisDirection up) {
+    imu->ConfigMountPose(forward, up);
 }
 
 auto PigeonIMU::getYaw() const -> std::optional<double> {

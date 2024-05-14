@@ -46,6 +46,7 @@ auto main(int32_t argc, char **argv) -> int32_t {
     rightGroup->setZeroPowerBehavior(Hardware::ZeroPowerBehavior::COAST);
 
     auto pigeonIMU{std::make_shared<Hardware::PigeonIMU>(10, "pigeon")};
+    pigeonIMU->setOrientation(AxisDirection::NegativeX, AxisDirection::PositiveZ);
     pigeonIMU->enableCompass(true);
 
     std::cout << "Motor setup complete!" << std::endl;
