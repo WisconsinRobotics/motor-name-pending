@@ -2,6 +2,7 @@
 #include "Group.h"
 #include "Motor.h"
 #include "ctre/phoenix/platform/Platform.h"
+#include "ctre/phoenix/platform/can/PlatformCAN.h"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
 #include <chrono>
 #include <iostream>
@@ -26,9 +27,9 @@ auto main() -> int32_t {
 
     short int some_num = 0;
 
-    ctre::phoenix::platform::can::SetCANInterface("can0");
+    ctre::phoenix::platform::can::PlatformCAN::SetCANInterface("can0");
     std::cout << "Starting motor" << std::endl;
-    ctre::phoenix::unmanaged::FeedEnable(FEED_ENABLE_TIMEOUT_MILLISECONDS);
+    ctre::phoenix::unmanaged::Unmanaged::FeedEnable(FEED_ENABLE_TIMEOUT_MILLISECONDS);
 
     TalonFX mtr{1};
     // mtr.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0.2);
@@ -39,7 +40,7 @@ auto main() -> int32_t {
     std::shared_ptr<Motor> testMotor2 = std::make_shared<Motor>(MOTOR_2_ID, "MOTOR2");
     Group testGroup1{"testGroup1"};
     
-    std::cout << "Enable state: " << ctre::phoenix::unmanaged::GetEnableState() << std::endl;
+    std::cout << "Enable state: " << ctre::phoenix::unmanaged::Unmanaged::GetEnableState() << std::endl;
 
     testMotor1->setPower(0.5);
     testGroup1.addControlGroup(testMotor1);
@@ -73,7 +74,7 @@ auto main() -> int32_t {
 
     testGroup1.clearGroup();
     printControlGroup(testGroup1);
-};
+}
 
 void printControlGroup(const ControlGroup &obj) {
     std::cout << "Motor Name:  " << obj.getName() << std::endl;

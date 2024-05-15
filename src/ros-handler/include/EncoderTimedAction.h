@@ -18,8 +18,8 @@ private:
     void onTimerEvent(const ros::TimerEvent &event) override;
 
     const ros::Publisher publisher;
-    static constexpr double ENCODER_PUBLISHING_RATE_HZ{50};
-    static constexpr uint32_t ENCODER_PUBLISHING_BUFFER_SIZE{1};
+    static constexpr double ENCODER_PUBLISHER_RATE_HZ{50};
+    static constexpr uint32_t ENCODER_PUBLISHER_BUFFER_SIZE{1};
 };
 
 } // namespace RosHandler

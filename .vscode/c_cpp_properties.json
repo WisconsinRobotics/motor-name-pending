@@ -6,9 +6,7 @@
         "limitSymbolsToIncludedHeaders": false
       },
       "includePath": [
-        "/home/danielz/WRover_Software/devel/include/**",
         "/opt/ros/noetic/include/**",
-        "/home/danielz/catkin_ws/src/wrevolution/include/**",
         "/usr/include/**"
       ],
       "name": "ROS",

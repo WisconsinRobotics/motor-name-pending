@@ -1,3 +1,4 @@
+add_subdirectory(CalibrateMagnetometer)
 add_subdirectory(RawTalonTest)
-add_subdirectory(RosControlTest)
+add_subdirectory(RosPhoenix)
 add_subdirectory(MockMotors)

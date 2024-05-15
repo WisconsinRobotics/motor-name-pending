@@ -10,8 +10,8 @@ EncoderTimedAction::EncoderTimedAction(ros::NodeHandle &node, const std::shared_
     : ControlGroupRosTimedAction(node,
                                  controlGroup,
                                  "Encoder Publisher",
-                                 ros::Rate{ENCODER_PUBLISHING_RATE_HZ}),
-      publisher{node.advertise<std_msgs::Float64>(controlGroup->getName() + "/encoder", ENCODER_PUBLISHING_BUFFER_SIZE)} {}
+                                 ros::Rate{ENCODER_PUBLISHER_RATE_HZ}),
+      publisher{node.advertise<std_msgs::Float64>(controlGroup->getName() + "/encoder", ENCODER_PUBLISHER_BUFFER_SIZE)} {}
 
 void EncoderTimedAction::onTimerEvent(const ros::TimerEvent &event) {
     std_msgs::Float64 msg;

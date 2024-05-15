@@ -63,6 +63,7 @@ add_service_files(
     ResetSettings.srv
     ResetEncoder.srv
     Reverse.srv
+    SetHeading.srv
     ZeroPowerBehavior.srv
 )
 
@@ -132,29 +133,17 @@ include_directories(
 # add_library(${PROJECT_NAME}
 # src/${PROJECT_NAME}/wrevolution.cpp
 # )
+if(${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "arm-linux-gnueabihf") # Jetson TK1 / Pi
+    set(PHOENIX_LIBS_DIR ${PROJECT_SOURCE_DIR}/lib/raspberry)
+elseif(${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "aarch64-linux-gnu") # Jetson TX2
+    set(PHOENIX_LIBS_DIR ${PROJECT_SOURCE_DIR}/lib/jetsontx)
+else()
+    set(PHOENIX_LIBS_DIR ${PROJECT_SOURCE_DIR}/lib/x86-64)
+endif()
+
 function(MakeTalonTarget TARGET_NAME)
-    if(${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "arm-linux-gnueabihf") # Jetson TK1 / Pi
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_Phoenix.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCCI.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixDiagnostics.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixPlatform_socketcan.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCanutils.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/raspberry/libCTRE_PhoenixCore.a)
-    elseif(${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "aarch64-linux-gnu") # Jetson TX2
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_Phoenix.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCCI.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixDiagnostics.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixPlatform_socketcan.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCanutils.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/jetsontx/libCTRE_PhoenixCore.a)
-    else()
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_Phoenix.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCCI.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixDiagnostics.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixPlatform_socketcan.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCanutils.a)
-        target_link_libraries(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCore.a)
-    endif()
+    target_link_libraries(${TARGET_NAME} PRIVATE ${PHOENIX_LIBS_DIR}/libCTRE_Phoenix.so)
+    target_link_libraries(${TARGET_NAME} PRIVATE ${PHOENIX_LIBS_DIR}/libCTRE_PhoenixCCI.so)
 
     target_link_libraries(${TARGET_NAME} PRIVATE Threads::Threads)
 endfunction(MakeTalonTarget)
@@ -165,3 +154,13 @@ function(MakeROSTarget TARGET_NAME)
 endfunction(MakeROSTarget)
 
 add_subdirectory(src)
+
+# Copy Phoenix shared libraries
+file(
+    COPY ${PHOENIX_LIBS_DIR}/libCTRE_Phoenix.so
+    DESTINATION ${CATKIN_DEVEL_PREFIX}/lib
+)
+file(
+    COPY ${PHOENIX_LIBS_DIR}/libCTRE_PhoenixCCI.so
+    DESTINATION ${CATKIN_DEVEL_PREFIX}/lib
+)
